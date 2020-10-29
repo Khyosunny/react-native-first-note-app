@@ -1,12 +1,16 @@
 import React, { useContext } from 'react';
 import { DataContext } from '../../App';
-import { TopMenu, SaveButtonText, SaveButton, TitleInput, NoteInput, CreatePageContainer } from './CreatePageStyle';
+import { TopMenu, TitleInput, NoteInput, CreatePageContainer } from './CreatePageStyle';
+import SaveButton from '../../components/saveButton/SaveButton';
 
 export default ({navigation}) => {
   const post = useContext(DataContext);
   const { title, note, dispatch, nextID } = post
 
   const now = new Date();
+  const hours = now.getHours();
+  const minutes = now.getMinutes();
+
 
   const onCreate = () => {
     dispatch({
@@ -14,9 +18,9 @@ export default ({navigation}) => {
       content: {
         id: nextID.current,
         title,
-        text: note,
+        note,
         active: false,
-        date: `${now.getFullYear()}년 ${now.getMonth()+1}월 ${now.getDate()}일`
+        date: `${hours < 12 ? '오전' : '오후'} ${hours < 10 ? `0${hours}` : hours} : ${minutes < 10 ? `0${minutes}` : minutes}`
       }
     })
     nextID.current += 1;
@@ -26,12 +30,10 @@ export default ({navigation}) => {
   return (
       <CreatePageContainer>
         <TopMenu>
-          <SaveButton onPress={onCreate}>
-            <SaveButtonText>저장</SaveButtonText>
-          </SaveButton>
+          <SaveButton event={onCreate}/>
         </TopMenu>
  
-      <TitleInput onChangeText={(text) => {dispatch({type: 'TITLE_VALUE', text})}} value={title} placeholder="제목"/>
+      <TitleInput onChangeText={(title) => {dispatch({type: 'TITLE_VALUE', title})}} value={title} placeholder="제목"/>
       <NoteInput onChangeText={(note) => {dispatch({type: 'NOTE_VALUE', note})}} value={note} textAlignVertical="top" placeholder="내용" multiline={true}/>
     </CreatePageContainer>
   )

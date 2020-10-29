@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+
+
 const TopMenu = styled.View`
   width: 100%;
   border-bottom-width: 1px;
@@ -8,6 +10,8 @@ const TopMenu = styled.View`
   flex-direction: row;
   justify-content: flex-end;
 `;
+
+
 
 const TitleInput = styled.TextInput`
   font-size: 22px;
@@ -27,10 +31,10 @@ const NoteInput = styled.TextInput`
 `;
 
 
-const CreatePageContainer = styled.View`
+const UpdatePageContainer = styled.View`
   flex: 1;
   background-color: #fff;
 `;
 
 
-export { TopMenu, TitleInput, NoteInput, CreatePageContainer }
+export { TopMenu, TitleInput, NoteInput, UpdatePageContainer }

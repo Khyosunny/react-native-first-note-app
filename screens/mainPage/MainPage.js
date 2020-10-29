@@ -18,7 +18,7 @@ export default ({navigation}) => {
       <Container>
         {
           contents.map((item, i) => {
-            return (<Card item={item} key={i}/>)
+            return (<Card item={item} key={i} navigation={navigation}/>)
           })
         }
       </Container>

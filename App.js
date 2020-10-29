@@ -11,18 +11,22 @@ const initialState = {
     title: '',
     note: ''
   },
+  updateInputs: {
+    title: '',
+    note: ''
+  },
   contents : [
     {
-      id: 1,
-      title: "첫번째 제목",
-      text: "내용",
+      id: 2,
+      title: "두번째 제목",
+      note: "내용",
       active: false,
       date: "2020년 10월 29일"
     },
     {
-      id: 2,
-      title: "두번째 제목",
-      text: "내용",
+      id: 1,
+      title: "첫번째 제목",
+      note: "내용",
       active: false,
       date: "2020년 10월 29일"
     }
@@ -46,7 +50,7 @@ function reducer(state, action){
         ...state,
         inputs: {
           ...state.inputs,
-          title: action.text
+          title: action.title
         }
       }
     case 'NOTE_VALUE':
@@ -70,6 +74,44 @@ function reducer(state, action){
           note: ''
         }
       }
+    case 'UPDATE_MOUNT':
+      return {
+        ...state,
+        isLoading: false,
+        updateInputs: {
+          title: action.title,
+          note: action.note
+        }
+      }
+    case 'UPDATE_TITLE':
+      return {
+        ...state,
+        updateInputs: {
+          ...state.updateInputs,
+          title: action.title
+        }
+      }
+    case 'UPDATE_NOTE':
+      return {
+        ...state,
+        updateInputs: {
+          ...state.updateInputs,
+          note: action.note
+        }
+      }
+    case 'UPDATE_CONTENT':
+      return {
+        ...state,
+        contents: state.contents.map((item) => 
+          item.id === action.id ? {...item, title: action.title, note: action.note}
+          : item
+        )
+      }
+    case 'REMOVE_CONTENT':
+      return {
+        ...state,
+        contents: state.contents.filter(item => item.id !== action.id )
+      }
     default:
       return state
   }
@@ -79,7 +121,7 @@ export default () => {
   const nextID = useRef(3)
 
   const [data, dispatch] = useReducer(reducer, initialState)
-  const { contents, isLoading } = data
+  const { contents, isLoading, updateInputs } = data
   const { title, note } = data.inputs
 
   useEffect(() => {
@@ -90,7 +132,7 @@ export default () => {
   }, [])
  
   return isLoading ? <Text>로딩 중</Text> : (
-    <DataContext.Provider value={{contents, dispatch, title, note, nextID}}>
+    <DataContext.Provider value={{contents, dispatch, title, note, nextID, updateInputs, isLoading}}>
       <NavigationContainer>
         <StatusBar style="black" />
         <StackNavigator />
