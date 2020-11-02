@@ -21,6 +21,7 @@ const initialState = {
       title: "두번째 제목",
       note: "내용",
       active: false,
+      category: '',
       date: "2020년 10월 29일"
     },
     {
@@ -28,6 +29,7 @@ const initialState = {
       title: "첫번째 제목",
       note: "내용",
       active: false,
+      category: '',
       date: "2020년 10월 29일"
     }
   ]
@@ -118,6 +120,7 @@ function reducer(state, action){
 }
 
 export default () => {
+
   const nextID = useRef(3)
 
   const [data, dispatch] = useReducer(reducer, initialState)
@@ -132,7 +135,7 @@ export default () => {
   }, [])
  
   return isLoading ? <Text>로딩 중</Text> : (
-    <DataContext.Provider value={{contents, dispatch, title, note, nextID, updateInputs, isLoading}}>
+    <DataContext.Provider value={{contents, dispatch, title, note, nextID, updateInputs, isLoading }}>
       <NavigationContainer>
         <StatusBar style="black" />
         <StackNavigator />

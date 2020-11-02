@@ -11,8 +11,8 @@ const Stack = createStackNavigator();
 export default () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="MainPage" component={MainPage} />
       <Stack.Screen name="CreatePage" component={CreatePage} />
+      <Stack.Screen name="MainPage" component={MainPage} />
       <Stack.Screen name="UpdatePage" component={UpdatePage} />
     </Stack.Navigator>
   )
