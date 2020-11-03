@@ -10,6 +10,7 @@ export default ({navigation, route}) => {
   const { id } = route.params
   
 
+  
   const showToast = () => {
     ToastAndroid.show('입력한 내용이 없어 노트를 저장하지 않았어요.', ToastAndroid.SHORT);
   };

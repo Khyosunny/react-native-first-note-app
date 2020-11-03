@@ -4,7 +4,7 @@ import { DataContext } from '../../App';
 import { TopMenu, TitleInput, NoteInput, CreatePageContainer } from './CreatePageStyle';
 import SaveButton from '../../components/saveButton/SaveButton';
 import CategoryButton from '../../components/CategoryButton';
-import ModalSelectCategory from '../../components/ModalSelectCategory';
+import SelectCategory from '../../components/modal/SelectCategory';
 
 export default ({navigation}) => {
   const post = useContext(DataContext);
@@ -48,7 +48,7 @@ export default ({navigation}) => {
       </TopMenu>
 
       <Modal visible={modalVisible} transparent={true} onRequestClose={onModalInvisible}>
-        <ModalSelectCategory />
+        <SelectCategory />
       </Modal>
 
       <CategoryButton onModalVisible={onModalVisible}/>

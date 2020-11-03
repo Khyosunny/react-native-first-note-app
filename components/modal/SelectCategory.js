@@ -1,7 +1,7 @@
 import React, { useContext, useState }from 'react';
 import { Modal } from 'react-native';
 import styled from 'styled-components';
-import ModalCreateCategory from './ModalCreateCategory'
+import CreateCategory from './CreateCategory'
 
 
 const ModalText = styled.Text`
@@ -50,7 +50,7 @@ export default () => {
       <ModalView>
         <ModalTitle>카테고리 선택하기</ModalTitle>
         <Modal visible={modalCreateCateVisible} transparent={true} onRequestClose={onModalCreateCateInvisible}>
-          <ModalCreateCategory onModalCreateCateInvisible={onModalCreateCateInvisible}/>
+          <CreateCategory onModalCreateCateInvisible={onModalCreateCateInvisible}/>
         </Modal>
         <Select onPress={() => {setModalCreateCateVisible(true)}} >
           <ModalText>＋ 카테고리 추가</ModalText>
