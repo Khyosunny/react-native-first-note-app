@@ -2,6 +2,7 @@ import React, { useEffect, useReducer, useRef, useState } from 'react';
 import { StatusBar, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import StackNavigator from './navigation/StackNavigator';
+import DrawerNavigator from './navigation/DrawerNavigator';
 
 export const DataContext = React.createContext();
 
@@ -9,11 +10,7 @@ const initialState = {
   isLoading : false,
   inputs: {
     title: '',
-    note: ''
-  },
-  updateInputs: {
-    title: '',
-    note: ''
+    note: '',
   },
   contents : [
     {
@@ -21,7 +18,7 @@ const initialState = {
       title: "두번째 제목",
       note: "내용",
       active: false,
-      category: '',
+      category: "공부",
       date: "2020년 10월 29일"
     },
     {
@@ -29,7 +26,7 @@ const initialState = {
       title: "첫번째 제목",
       note: "내용",
       active: false,
-      category: '',
+      category: "일정",
       date: "2020년 10월 29일"
     }
   ]
@@ -73,32 +70,8 @@ function reducer(state, action){
         ],
         inputs: {
           title: '',
-          note: ''
-        }
-      }
-    case 'UPDATE_MOUNT':
-      return {
-        ...state,
-        isLoading: false,
-        updateInputs: {
-          title: action.title,
-          note: action.note
-        }
-      }
-    case 'UPDATE_TITLE':
-      return {
-        ...state,
-        updateInputs: {
-          ...state.updateInputs,
-          title: action.title
-        }
-      }
-    case 'UPDATE_NOTE':
-      return {
-        ...state,
-        updateInputs: {
-          ...state.updateInputs,
-          note: action.note
+          note: '',
+          category: ''
         }
       }
     case 'UPDATE_CONTENT':
@@ -124,8 +97,8 @@ export default () => {
   const nextID = useRef(3)
 
   const [data, dispatch] = useReducer(reducer, initialState)
-  const { contents, isLoading, updateInputs } = data
-  const { title, note } = data.inputs
+  const { contents, isLoading } = data
+  const { title, note, category } = data.inputs
 
   useEffect(() => {
     dispatch({type: 'START_LOADING'})
@@ -135,9 +108,8 @@ export default () => {
   }, [])
  
   return isLoading ? <Text>로딩 중</Text> : (
-    <DataContext.Provider value={{contents, dispatch, title, note, nextID, updateInputs, isLoading }}>
+    <DataContext.Provider value={{contents, dispatch, title, note, category, nextID, isLoading }}>
       <NavigationContainer>
-        <StatusBar style="black" />
         <StackNavigator />
       </NavigationContainer>
     </DataContext.Provider>

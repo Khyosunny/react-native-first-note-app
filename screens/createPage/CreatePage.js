@@ -9,7 +9,8 @@ import SelectCategory from '../../components/modal/SelectCategory';
 export default ({navigation}) => {
   const post = useContext(DataContext);
   const { title, note, dispatch, nextID } = post
-
+  const [categorys, setCategorys] = useState(['공부', '일정'])
+  const [getCategory, setGetCategory] = useState('카테고리 미지정')
   const [modalVisible, setModalVisible] = useState(false);
 
 
@@ -34,7 +35,8 @@ export default ({navigation}) => {
         title,
         note,
         active: false,
-        date: `${hours < 12 ? '오전' : '오후'} ${hours < 10 ? `0${hours}` : hours} : ${minutes < 10 ? `0${minutes}` : minutes}`
+        date: `${hours < 12 ? '오전' : '오후'} ${hours < 10 ? `0${hours}` : hours} : ${minutes < 10 ? `0${minutes}` : minutes}`,
+        category: getCategory
       }
     })
     nextID.current += 1;
@@ -48,13 +50,13 @@ export default ({navigation}) => {
       </TopMenu>
 
       <Modal visible={modalVisible} transparent={true} onRequestClose={onModalInvisible}>
-        <SelectCategory />
+        <SelectCategory setGetCategory={setGetCategory} categorys={categorys} onModalInvisible={onModalInvisible} setCategorys={setCategorys}/>
       </Modal>
 
-      <CategoryButton onModalVisible={onModalVisible}/>
+      <CategoryButton onModalVisible={onModalVisible} getCategory={getCategory} />
 
       <TitleInput onChangeText={(title) => {dispatch({type: 'TITLE_VALUE', title})}} value={title} placeholder="제목"/>
-      <NoteInput onChangeText={(note) => {dispatch({type: 'NOTE_VALUE', note})}} value={note} textAlignVertical="top" placeholder="내용" multiline={true}/>
+      <NoteInput onChangeText={(note) => {dispatch({type: 'NOTE_VALUE', note})}} value={note} autoFocus={true} textAlignVertical="top" placeholder="내용" multiline={true}/>
     </CreatePageContainer>
   )
 }

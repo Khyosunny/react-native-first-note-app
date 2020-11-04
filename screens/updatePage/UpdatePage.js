@@ -6,10 +6,11 @@ import SaveButton from '../../components/saveButton/SaveButton';
 
 export default ({navigation, route}) => {
   const post = useContext(DataContext);
-  const { dispatch, updateInputs, contents } = post
-  const { id } = route.params
+  const { dispatch } = post
+  const { id, title, note } = route.params
   
-
+  const [titleValue, setTitleValue] = useState(title);
+  const [noteValue, setNoteValue] = useState(note);
   
   const showToast = () => {
     ToastAndroid.show('입력한 내용이 없어 노트를 저장하지 않았어요.', ToastAndroid.SHORT);
@@ -19,7 +20,7 @@ export default ({navigation, route}) => {
   console.log(id)
 
   const onUpdate = () => {
-    if( updateInputs.title === '' && updateInputs.note === '' ) {
+    if( titleValue === '' && noteValue === '' ) {
       dispatch({
         type: 'REMOVE_CONTENT',
         id
@@ -29,8 +30,8 @@ export default ({navigation, route}) => {
       dispatch({
         type: 'UPDATE_CONTENT',
           id,
-          title: updateInputs.title,
-          note: updateInputs.note,
+          title: titleValue,
+          note: noteValue,
       })
     }
     navigation.goBack();
@@ -43,8 +44,8 @@ export default ({navigation, route}) => {
           <SaveButton event={onUpdate} />
         </TopMenu>
  
-      <TitleInput onChangeText={(title) => {dispatch({type: 'UPDATE_TITLE', title})}} value={updateInputs.title} placeholder="제목"/>
-      <NoteInput onChangeText={(note) => {dispatch({type: 'UPDATE_NOTE', note})}} value={updateInputs.note} textAlignVertical="top" placeholder="내용" multiline={true}/>
+      <TitleInput onChangeText={(title) => {setTitleValue(title)}} value={titleValue} placeholder="제목"/>
+      <NoteInput onChangeText={(note) => {setNoteValue(note)}} value={noteValue} autoFocus={true} textAlignVertical="top" placeholder="내용" multiline={true}/>
     </UpdatePageContainer>
   )
 }

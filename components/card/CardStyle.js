@@ -5,7 +5,7 @@ const CardContainer = styled.TouchableOpacity`
   padding: 20px;
   background-color: #fff;
   border-radius: 10px;
-  margin: 10px;
+  margin: 20px 15px 0;
 `;
 
 const CardTitle = styled.Text`

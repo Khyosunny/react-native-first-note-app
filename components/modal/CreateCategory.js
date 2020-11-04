@@ -48,19 +48,25 @@ const CenteredView = styled.View`
 `;
 
 
-export default ({onModalCreateCateInvisible}) => {
-
+export default ({onModalCreateCateInvisible, categorys, setCategorys}) => {
+  const [input, setInput] = useState('')
+  const onAddCategory = () => {
+    //app 에서 관리하는 category 배열에 input문자열 추가.  
+    setCategorys([...categorys, input])
+    onModalCreateCateInvisible()
+  }
+  // setGetCategory(input)
   return (
     <CenteredView>
         <ModalView>
           <ModalTitle>카테고리 추가하기</ModalTitle>
-          <CreateCategoryInput autoFocus={true} placeholder="카테고리 명을 입력하세요."/>
+          <CreateCategoryInput onChangeText={(category) => {setInput(category)}} value={input} autoFocus={true} placeholder="카테고리 명을 입력하세요."/>
 
           <SelectButtonBox>
             <Select onPress={onModalCreateCateInvisible}>
               <SelectText style={{ color: 'red' }}>취소</SelectText>
             </Select>
-            <Select>
+            <Select onPress={onAddCategory}>
               <SelectText style={{ color: 'green' }}>완료</SelectText>
             </Select>
           </SelectButtonBox>

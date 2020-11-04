@@ -22,12 +22,11 @@ const Container = styled.View`
   padding: 10px 15px;
 `;
 
-export default ({onModalVisible}) => {
-
+export default ({onModalVisible, getCategory}) => {
   return (
     <Container>
       <CategoryButton onPress={onModalVisible}>
-        <CategoryText>카테고리 미지정</CategoryText>
+        <CategoryText>{getCategory}</CategoryText>
       </CategoryButton>
     </Container>
   )

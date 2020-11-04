@@ -8,13 +8,9 @@ export default ({item, navigation}) => {
   const { dispatch } = post
 
   const mount = () => {
-    dispatch({
-      type: 'UPDATE_MOUNT',
-      title: item.title,
-      note: item.note
-    })
-    navigation.navigate('UpdatePage', { id: item.id })
+    navigation.navigate('UpdatePage', item)
   }
+  
   return (
     <CardContainer onPress={mount}>
       {
