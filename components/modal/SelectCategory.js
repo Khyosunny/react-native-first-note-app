@@ -11,9 +11,8 @@ const ModalText = styled.Text`
 
 const Select = styled.TouchableOpacity`
   border-top-width: 1px;
-  border-color: #999;
-  background-color: pink;
-  padding: 10px 0;
+  border-color: #dbdbdb;
+  padding: 12px 0;
 `;
 
 const ModalTitle = styled.Text`
@@ -38,9 +37,9 @@ const CenteredView = styled.View`
 
 `;
 
-export default ({setGetCategory, setCategorys, categorys, onModalInvisible}) => {
+export default ({ onModalInvisible }) => {
   const post = useContext(DataContext);
-  const { category } = post
+  const { setCategoryChange, setCategorys, categorys } = post
 
   const [modalCreateCateVisible, setModalCreateCateVisible] = useState(false);
 
@@ -48,8 +47,8 @@ export default ({setGetCategory, setCategorys, categorys, onModalInvisible}) => 
   const onModalCreateCateInvisible  = () => {
     setModalCreateCateVisible(!modalCreateCateVisible);
   }
-  const onGetCategory = (item) => {
-    setGetCategory(item)
+  const onCategoryChange = (item) => {
+    setCategoryChange(item)
     onModalInvisible()
   }
   return (
@@ -57,12 +56,12 @@ export default ({setGetCategory, setCategorys, categorys, onModalInvisible}) => 
       <ModalView>
         <ModalTitle>카테고리 선택하기</ModalTitle>
         <Modal visible={modalCreateCateVisible} transparent={true} onRequestClose={onModalCreateCateInvisible}>
-          <CreateCategory categorys={categorys} setCategorys={setCategorys} category={category} onModalCreateCateInvisible={onModalCreateCateInvisible}/>
+          <CreateCategory categorys={categorys} setCategorys={setCategorys} onModalCreateCateInvisible={onModalCreateCateInvisible}/>
         </Modal>
         {
-          categorys && categorys.map((item)=>{
+          categorys && categorys.map((item, i)=>{
             return (
-            <Select onPress={()=>{onGetCategory(item)}}>
+            <Select onPress={()=>{onCategoryChange(item)}} key={i}>
               <ModalText>{item}</ModalText>
             </Select>
             )

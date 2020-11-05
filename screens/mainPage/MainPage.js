@@ -10,15 +10,16 @@ import AnimatedHeader from '../../components/header/AnimatedHeader';
 
 export default ({navigation}) => {
   const post = useContext(DataContext);
-  const { contents } = post
+  const { contents, setCategoryChange } = post
 
   const offset = useRef(new Animated.Value(0)).current;
 
+  const contentsLength = contents.length
 
   return (
     <>
-      <CreateButton navigation={navigation}/>
-      <AnimatedHeader animatedValue={offset} navigation={navigation}/>
+      <CreateButton navigation={navigation} setCategoryChange={setCategoryChange}/>
+      <AnimatedHeader animatedValue={offset} navigation={navigation} contentsLength={contentsLength}/>
       <Container contentContainerStyle={{paddingTop: 200}} scrollEventThrottle={16} onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: offset } }}],
             { useNativeDriver: false })}>
         {

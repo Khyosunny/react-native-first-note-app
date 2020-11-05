@@ -10,7 +10,7 @@ const HEADER_MIN_HEIGHT = 60;
 const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 
 
-export default ({animatedValue, navigation}) => {
+export default ({animatedValue, navigation, contentsLength}) => {
   const headerHeight = animatedValue.interpolate({
     inputRange: [0, HEADER_SCROLL_DISTANCE],
     outputRange: [HEADER_MAX_HEIGHT, HEADER_MIN_HEIGHT],
@@ -49,7 +49,7 @@ export default ({animatedValue, navigation}) => {
   return (
     <Animated.View style={[styles.container, {height: headerHeight}]}>
       <Animated.Text style={[styles.title, {fontSize: titleText, opacity : textOpacity}]}>나의 노트</Animated.Text>
-      <Animated.Text style={[styles.miniTitle, {fontSize: miniTitleSize, opacity : textOpacity}]}>노트 0개</Animated.Text>
+      <Animated.Text style={[styles.miniTitle, {fontSize: miniTitleSize, opacity : textOpacity}]}>노트 {contentsLength}개</Animated.Text>
       <View style={styles.iconBox}>
         
         <View style={styles.iconLeftBox}>

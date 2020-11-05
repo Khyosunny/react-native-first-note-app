@@ -9,7 +9,6 @@ const CategoryText = styled.Text`
 `;
 
 const CategoryButton = styled.TouchableOpacity`
-  width: 150px;
   height: 40px;
   border-radius: 20px;
   border: 1px solid #666;
@@ -18,15 +17,14 @@ const CategoryButton = styled.TouchableOpacity`
 
 const Container = styled.View`
   width: 100%;
-  background-color: pink;
   padding: 10px 15px;
 `;
 
-export default ({onModalVisible, getCategory}) => {
+export default ({onModalVisible, categoryChange}) => {
   return (
     <Container>
       <CategoryButton onPress={onModalVisible}>
-        <CategoryText>{getCategory}</CategoryText>
+        <CategoryText>{categoryChange}</CategoryText>
       </CategoryButton>
     </Container>
   )

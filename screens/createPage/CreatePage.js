@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, Modal } from 'react-native';
 import { DataContext } from '../../App';
 import { TopMenu, TitleInput, NoteInput, CreatePageContainer } from './CreatePageStyle';
@@ -8,9 +8,7 @@ import SelectCategory from '../../components/modal/SelectCategory';
 
 export default ({navigation}) => {
   const post = useContext(DataContext);
-  const { title, note, dispatch, nextID } = post
-  const [categorys, setCategorys] = useState(['공부', '일정'])
-  const [getCategory, setGetCategory] = useState('카테고리 미지정')
+  const { title, note, dispatch, nextID, categoryChange, setCategoryChange } = post
   const [modalVisible, setModalVisible] = useState(false);
 
 
@@ -36,12 +34,13 @@ export default ({navigation}) => {
         note,
         active: false,
         date: `${hours < 12 ? '오전' : '오후'} ${hours < 10 ? `0${hours}` : hours} : ${minutes < 10 ? `0${minutes}` : minutes}`,
-        category: getCategory
+        category: categoryChange
       }
     })
     nextID.current += 1;
     navigation.goBack();
   }
+
 
   return (
     <CreatePageContainer>
@@ -50,10 +49,10 @@ export default ({navigation}) => {
       </TopMenu>
 
       <Modal visible={modalVisible} transparent={true} onRequestClose={onModalInvisible}>
-        <SelectCategory setGetCategory={setGetCategory} categorys={categorys} onModalInvisible={onModalInvisible} setCategorys={setCategorys}/>
+        <SelectCategory onModalInvisible={onModalInvisible} />
       </Modal>
 
-      <CategoryButton onModalVisible={onModalVisible} getCategory={getCategory} />
+      <CategoryButton onModalVisible={onModalVisible} categoryChange={categoryChange} />
 
       <TitleInput onChangeText={(title) => {dispatch({type: 'TITLE_VALUE', title})}} value={title} placeholder="제목"/>
       <NoteInput onChangeText={(note) => {dispatch({type: 'NOTE_VALUE', note})}} value={note} autoFocus={true} textAlignVertical="top" placeholder="내용" multiline={true}/>

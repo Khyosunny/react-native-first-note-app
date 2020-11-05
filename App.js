@@ -71,7 +71,6 @@ function reducer(state, action){
         inputs: {
           title: '',
           note: '',
-          category: ''
         }
       }
     case 'UPDATE_CONTENT':
@@ -96,9 +95,12 @@ export default () => {
 
   const nextID = useRef(3)
 
+  const [categorys, setCategorys] = useState(['공부', '일정'])
+  const [categoryChange, setCategoryChange] = useState('카테고리 미지정')
+
   const [data, dispatch] = useReducer(reducer, initialState)
   const { contents, isLoading } = data
-  const { title, note, category } = data.inputs
+  const { title, note } = data.inputs
 
   useEffect(() => {
     dispatch({type: 'START_LOADING'})
@@ -108,7 +110,7 @@ export default () => {
   }, [])
  
   return isLoading ? <Text>로딩 중</Text> : (
-    <DataContext.Provider value={{contents, dispatch, title, note, category, nextID, isLoading }}>
+    <DataContext.Provider value={{contents, dispatch, title, note, nextID, isLoading, categorys, setCategorys, categoryChange, setCategoryChange}}>
       <NavigationContainer>
         <StackNavigator />
       </NavigationContainer>
