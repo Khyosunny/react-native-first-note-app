@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import { Text } from 'react-native';
 import styled from 'styled-components';
 import { DataContext } from '../../App';
@@ -28,14 +28,28 @@ const CardDate = styled.Text`
 
 export default ({item, navigation}) => {
   const post = useContext(DataContext);
-  const { dispatch } = post
 
-  const mount = () => {
-    navigation.navigate('UpdatePage', item)
+  const { dispatch, onLong, setOnLong } = post
+
+  const onLongPress = (id) => {
+    setOnLong(true)
+    dispatch({type: 'ACTIVE_LONG', id: id})
+    console.log('1',onLong)
+  }
+
+  const onPress = (id) => {
+    if(!onLong) {
+      navigation.navigate('UpdatePage', item)
+      console.log('2',onLong)
+    } else {
+      dispatch({type: 'ACTIVE_TOGGLE', id: id})
+      console.log('3',onLong)
+    }
   }
   
   return (
-    <CardContainer onPress={mount}>
+    <CardContainer 
+    style={{backgroundColor: item.active ? "#eee" : "#fff"}} onLongPress={() => {onLongPress(item.id)}} onPress={() => {onPress(item.id)}}>
       {
         item.title === '' ? null
         : <CardTitle numberOfLines={3}>{item.title}</CardTitle>

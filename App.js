@@ -86,6 +86,22 @@ function reducer(state, action){
         ...state,
         contents: state.contents.filter(item => item.id !== action.id )
       }
+    case 'ACTIVE_LONG':
+      return {
+        ...state,
+        contents: state.contents.map((item) => 
+          item.id === action.id ? {...item, active: true}
+        : item
+        )
+      }
+    case 'ACTIVE_TOGGLE':
+    return {
+      ...state,
+      contents: state.contents.map((item) => 
+        item.id === action.id ? {...item, active: !item.active}
+      : item
+      )
+    }
     default:
       return state
   }
@@ -97,6 +113,7 @@ export default () => {
 
   const [categorys, setCategorys] = useState(['공부', '일정'])
   const [categoryChange, setCategoryChange] = useState('카테고리 미지정')
+  const [ onLong, setOnLong ] = useState(false)
 
   const [data, dispatch] = useReducer(reducer, initialState)
   const { contents, isLoading } = data
@@ -110,7 +127,7 @@ export default () => {
   }, [])
  
   return isLoading ? <Text>로딩 중</Text> : (
-    <DataContext.Provider value={{contents, dispatch, title, note, nextID, isLoading, categorys, setCategorys, categoryChange, setCategoryChange}}>
+    <DataContext.Provider value={{contents, dispatch, title, note, nextID, isLoading, categorys, setCategorys, categoryChange, setCategoryChange, onLong, setOnLong}}>
       <NavigationContainer>
         <StackNavigator />
       </NavigationContainer>
