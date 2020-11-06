@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { ToastAndroid } from 'react-native';
 import { DataContext } from '../../App';
 import { TopMenu, TitleInput, NoteInput, UpdatePageContainer } from './UpdatePageStyle';
-import SaveButton from '../../components/saveButton/SaveButton';
+import SaveButton from '../../components/SaveButton';
 
 export default ({navigation, route}) => {
   const post = useContext(DataContext);

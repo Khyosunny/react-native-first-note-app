@@ -1,4 +1,14 @@
+import React from 'react';
 import styled from 'styled-components';
+
+export default ({event}) => {
+
+  return (
+    <SaveButton onPress={event}>
+      <SaveButtonText>저장</SaveButtonText>
+    </SaveButton>
+  )
+}
 
 const SaveButtonText = styled.Text`
   font-size: 20px;
@@ -14,5 +24,3 @@ const SaveButton = styled.TouchableOpacity`
   margin-right: 10px;
 
 `;
-
-export { SaveButtonText, SaveButton }

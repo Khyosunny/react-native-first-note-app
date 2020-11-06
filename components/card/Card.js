@@ -7,7 +7,7 @@ const CardContainer = styled.TouchableOpacity`
   padding: 20px;
   background-color: #fff;
   border-radius: 10px;
-  margin: 20px 15px 0;
+  margin: 10px 15px;
 `;
 
 const CardTitle = styled.Text`
@@ -26,24 +26,22 @@ const CardDate = styled.Text`
   margin-top: 10px;
 `;
 
-export default ({item, navigation}) => {
+export default ({item, navigation, slideUp}) => {
   const post = useContext(DataContext);
 
   const { dispatch, onLong, setOnLong } = post
 
   const onLongPress = (id) => {
     setOnLong(true)
+    slideUp();
     dispatch({type: 'ACTIVE_LONG', id: id})
-    console.log('1',onLong)
   }
 
   const onPress = (id) => {
     if(!onLong) {
       navigation.navigate('UpdatePage', item)
-      console.log('2',onLong)
     } else {
       dispatch({type: 'ACTIVE_TOGGLE', id: id})
-      console.log('3',onLong)
     }
   }
   

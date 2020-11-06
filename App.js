@@ -14,6 +14,22 @@ const initialState = {
   },
   contents : [
     {
+      id: 4,
+      title: "네번째 제목",
+      note: "내용",
+      active: false,
+      category: "공부",
+      date: "2020년 11월 06일"
+    },
+    {
+      id: 3,
+      title: "세번째 제목",
+      note: "내용",
+      active: false,
+      category: "공부",
+      date: "2020년 11월 06일"
+    },
+    {
       id: 2,
       title: "두번째 제목",
       note: "내용",
@@ -95,13 +111,23 @@ function reducer(state, action){
         )
       }
     case 'ACTIVE_TOGGLE':
-    return {
-      ...state,
-      contents: state.contents.map((item) => 
-        item.id === action.id ? {...item, active: !item.active}
-      : item
-      )
-    }
+      return {
+        ...state,
+        contents: state.contents.map((item) => 
+          item.id === action.id ? {...item, active: !item.active}
+        : item
+        )
+      }
+    case 'SELECT_DELETE':
+      return {
+        ...state,
+        contents: state.contents.filter(item => item.active === false)
+      }
+    case 'SELECT_CANCLE':
+      return {
+        ...state,
+        contents: state.contents.map((item) => ({...item, active:false}))
+      }
     default:
       return state
   }
@@ -109,7 +135,7 @@ function reducer(state, action){
 
 export default () => {
 
-  const nextID = useRef(3)
+  const nextID = useRef(5)
 
   const [categorys, setCategorys] = useState(['공부', '일정'])
   const [categoryChange, setCategoryChange] = useState('카테고리 미지정')

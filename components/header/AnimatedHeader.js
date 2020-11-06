@@ -53,7 +53,7 @@ export default ({animatedValue, navigation, contentsLength}) => {
       <View style={styles.iconBox}>
         
         <View style={styles.iconLeftBox}>
-          <TouchableOpacity style={styles.iconArea} onPress={navigation.openDrawer}>
+          <TouchableOpacity style={styles.iconArea} >
             <Image style={styles.hamburgerIcon} source={Hamburger} />
           </TouchableOpacity>
           <Animated.Text style={[styles.title2, {fontSize: titleText2, opacity : textOpacity2}]}>나의 노트</Animated.Text>
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     position: 'absolute',
     left: 0,
-    bottom: 0,
+    bottom: 5,
   },
   iconLeftBox: {
     flexDirection: 'row',

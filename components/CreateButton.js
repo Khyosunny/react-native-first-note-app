@@ -1,3 +1,4 @@
+import React from 'react';
 import styled from 'styled-components';
 
 const CreateButtonContainer = styled.TouchableOpacity`
@@ -19,4 +20,16 @@ const Plus = styled.Text`
 `;
 
 
-export { CreateButtonContainer, Plus }
+export default ({navigation, setCategoryChange}) => {
+
+  const onCreatePage = () => {
+    navigation.navigate('CreatePage')
+    setCategoryChange('카테고리 미지정')
+  }
+
+  return (
+    <CreateButtonContainer onPress={onCreatePage}>
+      <Plus>＋</Plus>
+    </CreateButtonContainer>
+  )
+}

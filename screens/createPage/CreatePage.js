@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, Modal } from 'react-native';
-import { DataContext } from '../../App';
 import { TopMenu, TitleInput, NoteInput, CreatePageContainer } from './CreatePageStyle';
-import SaveButton from '../../components/saveButton/SaveButton';
+import { DataContext } from '../../App';
+import SaveButton from '../../components/SaveButton';
 import CategoryButton from '../../components/CategoryButton';
 import SelectCategory from '../../components/modal/SelectCategory';
 
