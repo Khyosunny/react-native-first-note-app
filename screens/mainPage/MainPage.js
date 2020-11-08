@@ -15,13 +15,12 @@ export default ({navigation}) => {
 
   const offset = useRef(new Animated.Value(0)).current;
   const slideUpValue = useRef(new Animated.Value(0)).current;
-  const slideDownValue = useRef(new Animated.Value(1)).current;
   const contentsLength = contents.length
 
   const slideDown = () => {
     Animated.timing(slideUpValue, {
       toValue: 0,
-      duration: 1000,
+      duration: 300,
       useNativeDriver: true
     }).start();
   };
@@ -42,8 +41,9 @@ export default ({navigation}) => {
 
   const selectCancle = () => {
     dispatch({ type: 'SELECT_CANCLE' })
+    slideDown()
     setOnLong(false)
-    slideUp()
+
   }
   return (
     <>
@@ -62,37 +62,32 @@ export default ({navigation}) => {
           })
         }
       </Container>
-      {
-        onLong ?
-          <Animated.View
-            style={{
-              transform: [
-                {
-                  translateY: slideUpValue.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [60, 0]
-                  })
-                }
-              ],
-              width: '100%',
-              height: 60,
-              backgroundColor: '#fff',
-              position: 'absolute',
-              bottom: 0,
-              right: 0,
-              zIndex: 15,
-              flexDirection: 'row'
-            }}>
-            <Select onPress={selectCancle}>
-              <CancleText>취소</CancleText>
-            </Select>
-            <Select onPress={selectDelete}>
-              <DeleteText>삭제</DeleteText>
-            </Select>
-          </Animated.View>
-        : null
-      }
-      
+        <Animated.View
+          style={{
+            transform: [
+              {
+                translateY: slideUpValue.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: [60, 0]
+                })
+              }
+            ],
+            width: '100%',
+            height: 60,
+            backgroundColor: '#fff',
+            position: 'absolute',
+            bottom: 0,
+            right: 0,
+            zIndex: 15,
+            flexDirection: 'row'
+          }}>
+          <Select onPress={selectCancle}>
+            <CancleText>취소</CancleText>
+          </Select>
+          <Select onPress={selectDelete}>
+            <DeleteText>삭제</DeleteText>
+          </Select>
+        </Animated.View>
     </>
   )
 }
