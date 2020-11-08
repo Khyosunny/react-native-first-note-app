@@ -60,7 +60,7 @@ export default ({animatedValue, navigation, contentsLength}) => {
         </View>
 
         <View style={styles.iconRightBox}>
-          <TouchableOpacity style={styles.iconArea}>
+          <TouchableOpacity style={styles.iconArea} onPress={() => {navigation.navigate('SearchPage')}}>
             <Image style={styles.searchIcon} source={Search} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.iconArea}>

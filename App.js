@@ -145,14 +145,14 @@ export default () => {
   const { contents, isLoading } = data
   const { title, note } = data.inputs
 
-  useEffect(() => {
-    dispatch({type: 'START_LOADING'})
-    setTimeout(() => {
-      dispatch({type: 'FINISH_LOADING'})
-    },300)
-  }, [])
+  // useEffect(() => {
+  //   dispatch({type: 'START_LOADING'})
+  //   setTimeout(() => {
+  //     dispatch({type: 'FINISH_LOADING'})
+  //   },300)
+  // }, [])
  
-  return isLoading ? <Text>로딩 중</Text> : (
+  return (
     <DataContext.Provider value={{contents, dispatch, title, note, nextID, isLoading, categorys, setCategorys, categoryChange, setCategoryChange, onLong, setOnLong}}>
       <NavigationContainer>
         <StackNavigator />
