@@ -5,7 +5,7 @@ const CreateButtonContainer = styled.TouchableOpacity`
   width: 80px;
   height: 80px;
   border-radius: 80px;
-  background-color: #6ea7a9;
+  background-color: #FF7974;
   position: absolute;
   bottom: 30px;
   right: 30px;

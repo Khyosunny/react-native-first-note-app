@@ -2,10 +2,10 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Animated } from 'react-native';
 import styled from 'styled-components';
 
-import { DataContext } from '../../App';
-import Card from '../../components/card/Card';
-import CreateButton from '../../components/CreateButton';
-import AnimatedHeader from '../../components/header/AnimatedHeader';
+import { DataContext } from '../App';
+import Card from '../components/card/Card';
+import CreateButton from '../components/CreateButton';
+import AnimatedHeader from '../components/header/AnimatedHeader';
 
 
 
@@ -105,7 +105,7 @@ const CancleText = styled.Text`
 `;
 
 const Select = styled.TouchableOpacity`
-  background-color: grey;
+  background-color: #eee;
   width: 50%
 `;
 
@@ -122,5 +122,5 @@ const Select = styled.TouchableOpacity`
 
 const Container = styled.ScrollView`
   width: 100%;
-  background-color: #eae9ef;
+  background-color: #F6EEEA;
 `;

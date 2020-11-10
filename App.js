@@ -93,7 +93,7 @@ function reducer(state, action){
       return {
         ...state,
         contents: state.contents.map((item) => 
-          item.id === action.id ? {...item, title: action.title, note: action.note}
+          item.id === action.id ? {...item, title: action.title, note: action.note, category: action.category}
           : item
         )
       }
@@ -134,16 +134,15 @@ function reducer(state, action){
 }
 
 export default () => {
-
   const nextID = useRef(5)
-
-  const [categorys, setCategorys] = useState(['공부', '일정'])
-  const [categoryChange, setCategoryChange] = useState('카테고리 미지정')
-  const [ onLong, setOnLong ] = useState(false)
 
   const [data, dispatch] = useReducer(reducer, initialState)
   const { contents, isLoading } = data
   const { title, note } = data.inputs
+
+  const [categorys, setCategorys] = useState(['공부', '일정'])
+  const [categoryChange, setCategoryChange] = useState(contents.category ? category : '카테고리 미지정')
+  const [ onLong, setOnLong ] = useState(false)
 
   // useEffect(() => {
   //   dispatch({type: 'START_LOADING'})

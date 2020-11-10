@@ -1,6 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
 
+export default ({onModalVisible, categoryChange}) => {
+  return (
+    <Container>
+      <CategoryButton onPress={onModalVisible}>
+        <CategoryText>{categoryChange}</CategoryText>
+      </CategoryButton>
+    </Container>
+  )
+}
+
 const CategoryText = styled.Text`
   font-size: 16px;
   line-height: 40px;
@@ -19,13 +29,3 @@ const Container = styled.View`
   width: 100%;
   padding: 10px 15px;
 `;
-
-export default ({onModalVisible, categoryChange}) => {
-  return (
-    <Container>
-      <CategoryButton onPress={onModalVisible}>
-        <CategoryText>{categoryChange}</CategoryText>
-      </CategoryButton>
-    </Container>
-  )
-}

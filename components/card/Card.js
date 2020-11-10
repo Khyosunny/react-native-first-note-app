@@ -29,7 +29,7 @@ const CardDate = styled.Text`
 export default ({item, navigation, slideUp}) => {
   const post = useContext(DataContext);
 
-  const { dispatch, onLong, setOnLong } = post
+  const { dispatch, onLong, setOnLong, setCategoryChange } = post
 
   const onLongPress = (id) => {
     setOnLong(true)
@@ -38,7 +38,8 @@ export default ({item, navigation, slideUp}) => {
   }
 
   const onPress = (id) => {
-    if(!onLong) {
+    if (!onLong) {
+      setCategoryChange(item.category)
       navigation.navigate('UpdatePage', item)
     } else {
       dispatch({type: 'ACTIVE_TOGGLE', id: id})

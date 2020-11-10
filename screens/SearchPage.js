@@ -11,10 +11,8 @@ export default ({ navigation }) => {
   const { contents } = post
 
   const [searchData, setSearchData] = useState(null)
-  const [input, setInput] = useState('')
 
   const onChange = (text) => {
-    setInput(text)
     if (text !== '') {
       const arr = contents.filter((item) => {
         return (!(item.title.indexOf(text) === -1) || !(item.note.indexOf(text) === -1)) ? item : null
@@ -52,7 +50,7 @@ export default ({ navigation }) => {
 
 const CardScroll = styled.ScrollView`
   width: 100%;
-  background-color: #eae9ef;
+  background-color: #F6EEEA;
 `;
 
 const NoSearch = styled.Text`
@@ -65,7 +63,7 @@ const NoSearch = styled.Text`
 const SearchInput = styled.TextInput`
   width: 80%;
   height: 46px;
-  background-color: #eae9ef;
+  background-color: #F6EEEA;
   border-radius: 15px;
   padding: 0 10px;
   font-size: 18px;
@@ -91,5 +89,5 @@ const Nav = styled.View`
 
 const Container = styled.View`
   flex: 1;
-  background-color: #eae9ef;
+  background-color: #F6EEEA;
 `;
