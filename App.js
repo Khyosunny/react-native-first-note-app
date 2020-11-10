@@ -16,7 +16,7 @@ const initialState = {
     {
       id: 4,
       title: "네번째 제목",
-      note: "내용",
+      note: "내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용",
       active: false,
       category: "공부",
       date: "2020년 11월 06일"
@@ -141,7 +141,7 @@ export default () => {
   const { title, note } = data.inputs
 
   const [categorys, setCategorys] = useState(['공부', '일정'])
-  const [categoryChange, setCategoryChange] = useState(contents.category ? category : '카테고리 미지정')
+  const [categoryChange, setCategoryChange] = useState('카테고리 미지정')
   const [ onLong, setOnLong ] = useState(false)
 
   // useEffect(() => {
