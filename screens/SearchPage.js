@@ -1,5 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { View, Text } from 'react-native';
+import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
 import BackIcon from '../assets/back.png'
 import SearchCard from '../components/SearchCard';
@@ -9,13 +8,12 @@ import { DataContext } from '../App';
 export default ({ navigation }) => {
   const post = useContext(DataContext);
   const { contents } = post
-
   const [searchData, setSearchData] = useState(null)
 
   const onChange = (text) => {
     if (text !== '') {
       const arr = contents.filter((item) => {
-        return (!(item.title.indexOf(text) === -1) || !(item.note.indexOf(text) === -1)) ? item : null
+        return (!(item.title.toLowerCase().indexOf(text) === -1) || !(item.note.toLowerCase().indexOf(text) === -1)) ? item : null
       })
       if (arr.length > 0) {
         setSearchData(arr)
@@ -26,7 +24,6 @@ export default ({ navigation }) => {
       setSearchData(null)
     }
   }
-
   return (
       <Container>
         <Nav>
@@ -38,7 +35,7 @@ export default ({ navigation }) => {
         <CardScroll>
           {
             searchData ? 
-              searchData.map((item) => { 
+            searchData.map((item) => { 
                 return <SearchCard item={item} key={item.id} navigation={navigation}/>
               })
             : <NoSearch>검색 결과가 없습니다.</NoSearch>

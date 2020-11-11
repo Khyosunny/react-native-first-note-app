@@ -15,7 +15,24 @@ export default ({navigation}) => {
 
   const offset = useRef(new Animated.Value(0)).current;
   const slideUpValue = useRef(new Animated.Value(0)).current;
+  const radioValue = useRef(new Animated.Value(0)).current;
   const contentsLength = contents.length
+
+  const radioInvisible = () => {
+    Animated.timing(radioValue, {
+      toValue: 0,
+      duration: 300,
+      useNativeDriver: false
+    }).start();
+  }
+
+  const radioVisible = () => {
+    Animated.timing(radioValue, {
+      toValue: 1,
+      duration: 300,
+      useNativeDriver: false
+    }).start();
+  }
 
   const slideDown = () => {
     Animated.timing(slideUpValue, {
@@ -33,18 +50,21 @@ export default ({navigation}) => {
     }).start();
   };
 
-  const selectDelete = () => {
-    dispatch({ type: 'SELECT_DELETE' })
-    slideDown()
-    setOnLong(false)
-  }
-
   const selectCancle = () => {
-    dispatch({ type: 'SELECT_CANCLE' })
-    slideDown()
-    setOnLong(false)
+    dispatch({ type: 'SELECT_CANCLE' });
+    slideDown();
+    radioInvisible();
+    setOnLong(false);
+  };
 
-  }
+  const selectDelete = () => {
+    dispatch({ type: 'SELECT_DELETE' });
+    slideDown();
+    radioInvisible();
+    setOnLong(false);
+  };
+
+  
   return (
     <>
       {
@@ -58,7 +78,7 @@ export default ({navigation}) => {
             { useNativeDriver: false })}>
         {
           contents.map((item, i) => {
-            return (<Card item={item} key={i} navigation={navigation} slideUp={slideUp}/>)
+            return (<Card item={item} key={i} navigation={navigation} slideUp={slideUp} radioValue={radioValue} radioVisible={radioVisible}/>)
           })
         }
       </Container>
