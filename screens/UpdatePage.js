@@ -9,7 +9,7 @@ import SelectCategory from '../components/modal/SelectCategory';
 
 export default ({navigation, route}) => {
   const post = useContext(DataContext);
-  const { dispatch, categoryChange } = post
+  const { dispatch, categoryChange, reRender, setReRender } = post
   const { id, title, note } = route.params
 
   const [titleValue, setTitleValue] = useState(title);
@@ -44,6 +44,7 @@ export default ({navigation, route}) => {
         category: categoryChange
       })
     }
+    setReRender(!reRender)
     navigation.goBack();
   }
 
