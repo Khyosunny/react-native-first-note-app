@@ -1,9 +1,9 @@
 import React, {useContext, useState} from 'react';
-import { Text, Animated } from 'react-native';
+import { Animated } from 'react-native';
 import styled from 'styled-components';
 import { DataContext } from '../../App';
 
-export default ({item, navigation, slideUp, radioValue, radioVisible}) => {
+export default ({item, navigation, radioValue, slideUpAndRadio}) => {
   const post = useContext(DataContext);
   const { dispatch, onLong, setOnLong, setCategoryChange } = post
 
@@ -23,20 +23,19 @@ export default ({item, navigation, slideUp, radioValue, radioVisible}) => {
   });
   
   const onLongPress = (id) => {
-    setOnLong(true)
-    slideUp();
-    radioVisible();
-    dispatch({type: 'ACTIVE_LONG', id: id})
-  }
+    setOnLong(true);
+    slideUpAndRadio();
+    dispatch({ type: 'ACTIVE_LONG', id: id });
+  };
 
   const onPress = (id) => {
     if (!onLong) {
-      setCategoryChange(item.category)
-      navigation.navigate('UpdatePage', item)
+      setCategoryChange(item.category);
+      navigation.navigate('UpdatePage', item);
     } else {
-      dispatch({type: 'ACTIVE_TOGGLE', id: id})
+      dispatch({ type: 'ACTIVE_TOGGLE', id: id });
     }
-  }
+  };
   
   return (
     <CardContainer 
@@ -105,18 +104,6 @@ const Selected = styled.View`
   border-radius: 15px;
   background-color: #7A93CE;
 `;
-
-// const RadioCircle = styled.TouchableOpacity`
-//   width: 30px;
-//   height: 30px;
-//   border-radius: 30px;
-//   border: 2px solid #7A93CE;
-//   align-items: center;
-//   justify-content: center;
-//   position: absolute;
-//   top: 20px;
-//   left: 20px;
-// `;
 
 const CardContainer = styled.TouchableOpacity`
   padding: 20px;

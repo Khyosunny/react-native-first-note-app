@@ -1,28 +1,24 @@
 import React, { useContext, useState } from 'react';
-import { ToastAndroid, Modal } from 'react-native';
 import styled from 'styled-components';
 
+import { Modal } from 'react-native';
 import { DataContext } from '../App';
 import SaveButton from '../components/SaveButton';
 import BackButton from '../components/BackButton';
 import CategoryButton from '../components/CategoryButton';
 import SelectCategory from '../components/modal/SelectCategory';
 
-export default ({navigation, route}) => {
+export default ({ navigation }) => {
   const post = useContext(DataContext);
-  const { dispatch, categoryChange, reRender, setReRender } = post
-  const { id, title, note } = route.params;
-
-  const [titleValue, setTitleValue] = useState(title);
-  const [noteValue, setNoteValue] = useState(note);
+  const { title, note, dispatch, nextID, categoryChange } = post
   const [modalVisible, setModalVisible] = useState(false);
-  
+
+  const now = new Date();
+  const hours = now.getHours();
+  const minutes = now.getMinutes();
+
   const onBack = () => {
     navigation.goBack();
-  };
-
-  const showToast = () => {
-    ToastAndroid.show('입력한 내용이 없어 노트를 저장하지 않았어요.', ToastAndroid.SHORT);
   };
 
   const onModalInvisible = () => {
@@ -33,32 +29,27 @@ export default ({navigation, route}) => {
     setModalVisible(true);
   };
 
-  const onUpdate = () => {
-    if (titleValue === '' && noteValue === '') {
-      dispatch({
-        type: 'REMOVE_CONTENT',
-        id
-      });
-      showToast();
-    } else {
-      dispatch({
-        type: 'UPDATE_CONTENT',
-        id,
-        title: titleValue,
-        note: noteValue,
-        category: categoryChange
-      });
-    }
-    setReRender(!reRender);
+  const onCreate = () => {
+    dispatch({
+      type: 'CREATE_CONTENT',
+      content: {
+        id: nextID.current,
+        title,
+        note,
+        active: false,
+        date: `${hours < 12 ? '오전' : '오후'} ${hours < 10 ? `0${hours}` : hours} : ${minutes < 10 ? `0${minutes}` : minutes}`,
+        category: categoryChange,
+      }
+    });
+    nextID.current += 1;
     navigation.goBack();
   };
-
 
   return (
     <Container>
       <Nav>
-        <BackButton event={onBack}/>
-        <SaveButton event={onUpdate} />
+        <BackButton event={onBack} />
+        <SaveButton event={onCreate} />
       </Nav>
 
       <Modal visible={modalVisible} transparent={true} onRequestClose={onModalInvisible}>
@@ -66,12 +57,12 @@ export default ({navigation, route}) => {
       </Modal>
 
       <CategoryButton onModalVisible={onModalVisible} categoryChange={categoryChange} />
-      <TitleInput onChangeText={(title) => {setTitleValue(title)}} value={titleValue} placeholder="제목"/>
-      <NoteInput onChangeText={(note) => {setNoteValue(note)}} value={noteValue} autoFocus={true} textAlignVertical="top" placeholder="내용" multiline={true}/>
+
+      <TitleInput onChangeText={(title) => { dispatch({ type: 'TITLE_VALUE', title }) }} value={title} placeholder="제목" />
+      <NoteInput onChangeText={(note) => { dispatch({ type: 'NOTE_VALUE', note }) }} value={note} autoFocus={true} textAlignVertical="top" placeholder="내용" multiline={true} />
     </Container>
   )
 }
-
 
 const TitleInput = styled.TextInput`
   font-size: 22px;

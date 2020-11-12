@@ -1,15 +1,15 @@
-import React, {useContext, useState}  from 'react';
+import React, { useContext }  from 'react';
 import styled from 'styled-components';
-import { DataContext } from '../App';
+import { DataContext } from '../../App';
 
 export default ({item, navigation}) => {
   const post = useContext(DataContext);
   const { setCategoryChange } = post
 
   const onPress = () => {
-    navigation.navigate('UpdatePage', item)
-    setCategoryChange(item.category)
-  }
+    navigation.navigate('UpdatePage', item);
+    setCategoryChange(item.category);
+  };
 
   return (
     <CardContainer onPress={onPress}>
