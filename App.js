@@ -2,7 +2,6 @@ import React, { useEffect, useReducer, useRef, useState } from 'react';
 import { StatusBar, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import StackNavigator from './navigation/StackNavigator';
-import DrawerNavigator from './navigation/DrawerNavigator';
 
 export const DataContext = React.createContext();
 
@@ -46,7 +45,7 @@ const initialState = {
       date: "2020년 10월 29일"
     }
   ],
-  searchResult: null
+  allSelect: false
 }
 
 function reducer(state, action){
@@ -122,20 +121,27 @@ function reducer(state, action){
     case 'SELECT_DELETE':
       return {
         ...state,
-        contents: state.contents.filter(item => item.active === false)
+        contents: state.contents.filter(item => item.active === false),
+        allSelect: false
       }
     case 'SELECT_CANCLE':
       return {
         ...state,
-        contents: state.contents.map((item) => ({...item, active:false}))
+        contents: state.contents.map((item) => ({ ...item, active: false })),
+        allSelect: false
       }
-    // case 'SEARCH_RESULT':
-    //   return {
-    //     ...state,
-    //     searchResult: state.contents.filter((item) => {
-    //       return (!(item.title.indexOf(action.text) === -1) || !(item.note.indexOf(action.text) === -1)) ? item : null
-    //     })
-    //   }
+    case 'ALL_SELECT_TRUE':
+      return {
+        ...state,
+        contents: state.contents.map((item) => ({ ...item, active: true })),
+        allSelect: true
+      }
+    case 'ALL_SELECT_TOGGLE':
+      return {
+        ...state,
+        contents: state.contents.map((item) => ({ ...item, active: !item.active })),
+        allSelect: !state.allSelect
+      }
     default:
       return state
   }
@@ -145,7 +151,7 @@ export default () => {
   const nextID = useRef(5)
 
   const [data, dispatch] = useReducer(reducer, initialState)
-  const { contents, isLoading, searchResult } = data
+  const { contents, isLoading, allSelect } = data
   const { title, note } = data.inputs
   const [reRender, setReRender] = useState(true)
 
@@ -161,7 +167,7 @@ export default () => {
   // }, [])
  
   return (
-    <DataContext.Provider value={{reRender, setReRender, searchResult, contents, dispatch, title, note, nextID, isLoading, categorys, setCategorys, categoryChange, setCategoryChange, onLong, setOnLong}}>
+    <DataContext.Provider value={{reRender, setReRender, allSelect, contents, dispatch, title, note, nextID, isLoading, categorys, setCategorys, categoryChange, setCategoryChange, onLong, setOnLong}}>
       <NavigationContainer>
         <StackNavigator />
       </NavigationContainer>

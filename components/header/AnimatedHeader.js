@@ -1,6 +1,6 @@
 import React from 'react';
 import { Animated, View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
-import styled from 'styled-components';
+
 import Hamburger from '../../assets/Hamburger.png';
 import Search from '../../assets/Search.png';
 import Dot from '../../assets/Dot.png';
@@ -9,8 +9,8 @@ const HEADER_MAX_HEIGHT = 200;
 const HEADER_MIN_HEIGHT = 60;
 const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 
-
-export default ({animatedValue, navigation, contentsLength}) => {
+export default ({ animatedValue, navigation, contentsLength, onLong, onALLSelect, allSelect }) => {
+ 
   const headerHeight = animatedValue.interpolate({
     inputRange: [0, HEADER_SCROLL_DISTANCE],
     outputRange: [HEADER_MAX_HEIGHT, HEADER_MIN_HEIGHT],
@@ -49,25 +49,34 @@ export default ({animatedValue, navigation, contentsLength}) => {
   return (
     <Animated.View style={[styles.container, {height: headerHeight}]}>
       <Animated.Text style={[styles.title, {fontSize: titleText, opacity : textOpacity}]}>나의 노트</Animated.Text>
-      <Animated.Text style={[styles.miniTitle, {fontSize: miniTitleSize, opacity : textOpacity}]}>노트 {contentsLength}개</Animated.Text>
-      <View style={styles.iconBox}>
-        
-        <View style={styles.iconLeftBox}>
-          <TouchableOpacity style={styles.iconArea} >
-            <Image style={styles.hamburgerIcon} source={Hamburger} />
+      <Animated.Text style={[styles.miniTitle, { fontSize: miniTitleSize, opacity: textOpacity }]}>노트 {contentsLength}개</Animated.Text>
+      {
+        onLong ?
+          <TouchableOpacity style={styles.radioBox} onPress={onALLSelect}>
+            <View style={styles.radioCircle}>
+              {allSelect && <View style={styles.selected} />}
+            </View>
+            <Text style={styles.allText}>전체</Text>
           </TouchableOpacity>
-          <Animated.Text style={[styles.title2, {fontSize: titleText2, opacity : textOpacity2}]}>나의 노트</Animated.Text>
+          : <View style={styles.iconBox}>
+          <View style={styles.iconLeftBox}>
+            <TouchableOpacity style={styles.iconArea} >
+              <Image style={styles.hamburgerIcon} source={Hamburger} />
+            </TouchableOpacity>
+            <Animated.Text style={[styles.title2, {fontSize: titleText2, opacity : textOpacity2}]}>나의 노트</Animated.Text>
+          </View>
+  
+          <View style={styles.iconRightBox}>
+            <TouchableOpacity style={styles.iconArea} onPress={() => {navigation.navigate('SearchPage')}}>
+              <Image style={styles.searchIcon} source={Search} />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.iconArea}>
+              <Image style={styles.dotIcon} source={Dot} />
+            </TouchableOpacity>
+          </View>
         </View>
-
-        <View style={styles.iconRightBox}>
-          <TouchableOpacity style={styles.iconArea} onPress={() => {navigation.navigate('SearchPage')}}>
-            <Image style={styles.searchIcon} source={Search} />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.iconArea}>
-            <Image style={styles.dotIcon} source={Dot} />
-          </TouchableOpacity>
-        </View>
-      </View>
+      }
+      
     </Animated.View>
   )
 };
@@ -82,7 +91,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#F6EEEA',
     width: '100%',
     justifyContent: 'center',
-    // alignItems: 'center'
   },
   title: {
     fontSize: 30,
@@ -95,6 +103,28 @@ const styles = StyleSheet.create({
     color: '#828282',
     fontSize: 20,
     textAlign: 'center',
+  },
+  radioBox: {
+    width: '100%',
+    paddingHorizontal: 20,
+    position: 'absolute',
+    left: 0,
+    bottom: 5,
+  },
+  radioCircle: {
+    width: 30,
+    height: 30,
+    borderRadius: 30,
+    borderWidth: 2,
+    borderColor: '#7A93CE',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  selected: {
+    width: 15,
+    height: 15,
+    borderRadius: 15,
+    backgroundColor: '#7A93CE'
   },
   iconBox: {
     width: '100%',

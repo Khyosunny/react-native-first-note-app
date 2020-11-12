@@ -11,7 +11,7 @@ export default ({event}) => {
 }
 
 const SaveButtonText = styled.Text`
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 700;
   line-height: 50px;
   text-align: center;
@@ -22,5 +22,4 @@ const SaveButton = styled.TouchableOpacity`
   height: 50px;
   border-radius: 50px;
   margin-right: 10px;
-
 `;

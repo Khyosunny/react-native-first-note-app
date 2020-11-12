@@ -1,21 +1,26 @@
 import React, { useState, useContext, useEffect } from 'react';
 import styled from 'styled-components';
-import BackIcon from '../assets/back.png'
-import SearchCard from '../components/SearchCard';
+
 import { DataContext } from '../App';
+import BackButton from '../components/BackButton'
+import SearchCard from '../components/card/SearchCard';
 
 
 export default ({ navigation }) => {
   const post = useContext(DataContext);
   const { contents, reRender } = post
-  const [searchData, setSearchData] = useState(null)
-  const [input, setInput] = useState('')
+  const [searchData, setSearchData] = useState(null);
+  const [input, setInput] = useState('');
+
+  const onBack = () => {
+    navigation.goBack();
+  };
   
-  const test = (text) => {
+  const dataFilter = (text) => {
     if (text !== '') {
       const arr = contents.filter((item) => {
         return (!(item.title.indexOf(text) === -1) || !(item.note.indexOf(text) === -1)) ? item : null
-      })
+      });
       if (arr.length > 0) {
         setSearchData(arr)
       } else {
@@ -24,21 +29,22 @@ export default ({ navigation }) => {
     } else {
       setSearchData(null)
     }
-  }
+  };
+
   const onChange = (text) => {
-    setInput(text)
-    test(text)
+    setInput(text);
+    dataFilter(text);
   }
+
   useEffect(() => {
     let text = input
-    test(text)
-   },[reRender])
+    dataFilter(text);
+  }, [reRender]);
+  
   return (
       <Container>
         <Nav>
-          <Icon onPress={() => { navigation.goBack() }}>
-            <Back source={BackIcon}/>
-          </Icon>
+          <BackButton event={onBack}/>
           <SearchInput onChangeText={(t) => { onChange(t) }} autoFocus={true} placeholder="검색"/>
         </Nav>
         <CardScroll>
@@ -73,15 +79,6 @@ const SearchInput = styled.TextInput`
   border-radius: 15px;
   padding: 0 10px;
   font-size: 18px;
-`;
-
-const Back = styled.Image`
-  width: 30px;
-  height: 30px;
-`;
-
-const Icon = styled.TouchableOpacity`
-  padding: 10px;
 `;
 
 const Nav = styled.View`

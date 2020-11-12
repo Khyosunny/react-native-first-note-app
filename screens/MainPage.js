@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useRef } from 'react';
 import { Animated } from 'react-native';
 import styled from 'styled-components';
 
@@ -7,60 +7,63 @@ import Card from '../components/card/Card';
 import CreateButton from '../components/CreateButton';
 import AnimatedHeader from '../components/header/AnimatedHeader';
 
-
-
 export default ({navigation}) => {
   const post = useContext(DataContext);
-  const { contents, setCategoryChange, onLong, setOnLong, dispatch } = post
+  const { contents, setCategoryChange, onLong, setOnLong, dispatch, allSelect } = post
 
   const offset = useRef(new Animated.Value(0)).current;
   const slideUpValue = useRef(new Animated.Value(0)).current;
   const radioValue = useRef(new Animated.Value(0)).current;
   const contentsLength = contents.length
-
-  const radioInvisible = () => {
-    Animated.timing(radioValue, {
-      toValue: 0,
-      duration: 300,
-      useNativeDriver: false
-    }).start();
-  }
-
-  const radioVisible = () => {
-    Animated.timing(radioValue, {
-      toValue: 1,
-      duration: 300,
-      useNativeDriver: false
-    }).start();
-  }
-
-  const slideDown = () => {
-    Animated.timing(slideUpValue, {
-      toValue: 0,
-      duration: 300,
-      useNativeDriver: true
-    }).start();
+   
+  const onALLSelect = () => {
+    if (allSelect === false) {
+      dispatch({ type: 'ALL_SELECT_TRUE' });
+    } else {
+      dispatch({ type: 'ALL_SELECT_TOGGLE' });
+    }
   };
-  
-  const slideUp = () => {
-    Animated.timing(slideUpValue, {
-      toValue: 1,
-      duration: 300,
-      useNativeDriver: true
-    }).start();
+
+  const slideDownAndRadio = () => {
+    Animated.parallel([
+      Animated.timing(radioValue, {
+        toValue: 0,
+        duration: 300,
+        useNativeDriver: false
+      }),
+      Animated.timing(slideUpValue, {
+        toValue: 0,
+        duration: 300,
+        useNativeDriver: false
+      })
+    ]).start();
   };
+
+  const slideUpAndRadio = () => {
+    Animated.parallel([
+      Animated.timing(radioValue, {
+        toValue: 1,
+        duration: 300,
+        useNativeDriver: false
+      }),
+      Animated.timing(slideUpValue, {
+        toValue: 1,
+        duration: 300,
+        useNativeDriver: false
+      })
+    ]).start();
+  };
+
 
   const selectCancle = () => {
     dispatch({ type: 'SELECT_CANCLE' });
-    slideDown();
-    radioInvisible();
+    slideDownAndRadio();
     setOnLong(false);
   };
 
   const selectDelete = () => {
     dispatch({ type: 'SELECT_DELETE' });
-    slideDown();
-    radioInvisible();
+    slideDownAndRadio();
     setOnLong(false);
   };
 
@@ -73,12 +76,12 @@ export default ({navigation}) => {
         setCategoryChange={setCategoryChange}
         />
       }
-      <AnimatedHeader animatedValue={offset} navigation={navigation} contentsLength={contentsLength} />
+      <AnimatedHeader animatedValue={offset} navigation={navigation} contentsLength={contentsLength} onLong={onLong} onALLSelect={onALLSelect} allSelect={allSelect}/>
       <Container contentContainerStyle={{paddingTop: 200, paddingBottom: 30}} scrollEventThrottle={16} onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: offset } }}],
             { useNativeDriver: false })}>
         {
           contents.map((item, i) => {
-            return (<Card item={item} key={i} navigation={navigation} slideUp={slideUp} radioValue={radioValue} radioVisible={radioVisible}/>)
+            return (<Card item={item} key={i} navigation={navigation} radioValue={radioValue} slideUpAndRadio={slideUpAndRadio}/>)
           })
         }
       </Container>
