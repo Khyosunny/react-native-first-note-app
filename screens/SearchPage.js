@@ -8,7 +8,7 @@ import SearchCard from '../components/card/SearchCard';
 
 export default ({ navigation }) => {
   const post = useContext(DataContext);
-  const { contents, reRender } = post
+  const { contents } = post
   const [searchData, setSearchData] = useState(null);
   const [input, setInput] = useState('');
 
@@ -22,24 +22,22 @@ export default ({ navigation }) => {
         return (!(item.title.indexOf(text) === -1) || !(item.note.indexOf(text) === -1)) ? item : null
       });
       if (arr.length > 0) {
-        setSearchData(arr)
+        setSearchData(arr);
       } else {
-        setSearchData(null)
+        setSearchData(null);
       }
     } else {
-      setSearchData(null)
+      setSearchData(null);
     }
   };
 
   const onChange = (text) => {
     setInput(text);
-    dataFilter(text);
-  }
+  };
 
   useEffect(() => {
-    let text = input
-    dataFilter(text);
-  }, [reRender]);
+    dataFilter(input);
+  }, [input,contents]);
   
   return (
       <Container>

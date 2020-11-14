@@ -153,7 +153,6 @@ export default () => {
   const [data, dispatch] = useReducer(reducer, initialState)
   const { contents, isLoading, allSelect } = data
   const { title, note } = data.inputs
-  const [reRender, setReRender] = useState(true)
 
   const [categorys, setCategorys] = useState(['공부', '일정'])
   const [categoryChange, setCategoryChange] = useState('카테고리 미지정')
@@ -167,7 +166,7 @@ export default () => {
   // }, [])
  
   return (
-    <DataContext.Provider value={{reRender, setReRender, allSelect, contents, dispatch, title, note, nextID, isLoading, categorys, setCategorys, categoryChange, setCategoryChange, onLong, setOnLong}}>
+    <DataContext.Provider value={{allSelect, contents, dispatch, title, note, nextID, isLoading, categorys, setCategorys, categoryChange, setCategoryChange, onLong, setOnLong}}>
       <NavigationContainer>
         <StackNavigator />
       </NavigationContainer>
