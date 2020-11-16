@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer, useRef, useState } from 'react';
 import { StatusBar, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import StackNavigator from './navigation/StackNavigator';
+import DrawerNavigator from './navigation/DrawerNavigator';
 
 export const DataContext = React.createContext();
 
@@ -45,6 +45,7 @@ const initialState = {
       date: "2020년 10월 29일"
     }
   ],
+  categoryContents: [],
   allSelect: false
 }
 
@@ -100,7 +101,7 @@ function reducer(state, action){
     case 'REMOVE_CONTENT':
       return {
         ...state,
-        contents: state.contents.filter(item => item.id !== action.id )
+        contents: state.contents.filter(item => item.id !== action.id)
       }
     case 'ACTIVE_LONG':
       return {
@@ -142,6 +143,16 @@ function reducer(state, action){
         contents: state.contents.map((item) => ({ ...item, active: !item.active })),
         allSelect: !state.allSelect
       }
+    case 'CATEGORY_FILTER':
+      return {
+        ...state,
+        categoryContents: state.contents.filter(item => item.category == action.category)
+      }
+    case 'START_CONTENTS':
+      return {
+        ...state,
+        categoryContents: state.contents
+      }
     default:
       return state
   }
@@ -151,7 +162,7 @@ export default () => {
   const nextID = useRef(5)
 
   const [data, dispatch] = useReducer(reducer, initialState)
-  const { contents, isLoading, allSelect } = data
+  const { contents, isLoading, allSelect, categoryContents } = data
   const { title, note } = data.inputs
 
   const [categorys, setCategorys] = useState(['공부', '일정'])
@@ -166,9 +177,9 @@ export default () => {
   // }, [])
  
   return (
-    <DataContext.Provider value={{allSelect, contents, dispatch, title, note, nextID, isLoading, categorys, setCategorys, categoryChange, setCategoryChange, onLong, setOnLong}}>
+    <DataContext.Provider value={{categoryContents, allSelect, contents, dispatch, title, note, nextID, isLoading, categorys, setCategorys, categoryChange, setCategoryChange, onLong, setOnLong}}>
       <NavigationContainer>
-        <StackNavigator />
+        <DrawerNavigator />
       </NavigationContainer>
     </DataContext.Provider>
   )

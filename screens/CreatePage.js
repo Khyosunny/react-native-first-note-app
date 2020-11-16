@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
+import { Modal } from 'react-native';
 import styled from 'styled-components';
 
-import { Modal } from 'react-native';
 import { DataContext } from '../App';
 import SaveButton from '../components/SaveButton';
 import BackButton from '../components/BackButton';
@@ -42,6 +42,7 @@ export default ({ navigation }) => {
       }
     });
     nextID.current += 1;
+    dispatch({ type: 'START_CONTENTS' });
     navigation.goBack();
   };
 

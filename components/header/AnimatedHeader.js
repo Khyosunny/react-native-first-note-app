@@ -60,7 +60,7 @@ export default ({ animatedValue, navigation, contentsLength, onLong, onALLSelect
           </TouchableOpacity>
           : <View style={styles.iconBox}>
           <View style={styles.iconLeftBox}>
-            <TouchableOpacity style={styles.iconArea} >
+              <TouchableOpacity style={styles.iconArea} onPress={() => {navigation.toggleDrawer();}}>
               <Image style={styles.hamburgerIcon} source={Hamburger} />
             </TouchableOpacity>
             <Animated.Text style={[styles.title2, {fontSize: titleText2, opacity : textOpacity2}]}>나의 노트</Animated.Text>

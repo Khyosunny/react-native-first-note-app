@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { Animated } from 'react-native';
 import styled from 'styled-components';
 
@@ -9,12 +9,12 @@ import AnimatedHeader from '../components/header/AnimatedHeader';
 
 export default ({navigation}) => {
   const post = useContext(DataContext);
-  const { contents, setCategoryChange, onLong, setOnLong, dispatch, allSelect } = post
+  const { contents, setCategoryChange, onLong, setOnLong, dispatch, allSelect, categoryContents } = post
 
   const offset = useRef(new Animated.Value(0)).current;
   const slideUpValue = useRef(new Animated.Value(0)).current;
   const radioValue = useRef(new Animated.Value(0)).current;
-  const contentsLength = contents.length
+  const contentsLength = categoryContents.length
    
   const onALLSelect = () => {
     if (allSelect === false) {
@@ -67,6 +67,10 @@ export default ({navigation}) => {
     setOnLong(false);
   };
 
+  useEffect(() => {
+    dispatch({ type: 'START_CONTENTS' });
+  }, [])
+
   
   return (
     <>
@@ -80,7 +84,7 @@ export default ({navigation}) => {
       <Container contentContainerStyle={{paddingTop: 200, paddingBottom: 30}} scrollEventThrottle={16} onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: offset } }}],
             { useNativeDriver: false })}>
         {
-          contents.map((item, i) => {
+          categoryContents.map((item, i) => {
             return (<Card item={item} key={i} navigation={navigation} radioValue={radioValue} slideUpAndRadio={slideUpAndRadio}/>)
           })
         }
