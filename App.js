@@ -45,7 +45,7 @@ const initialState = {
       date: "2020년 10월 29일"
     }
   ],
-  categoryContents: [],
+  selectCategory: '',
   allSelect: false
 }
 
@@ -146,12 +146,7 @@ function reducer(state, action){
     case 'CATEGORY_FILTER':
       return {
         ...state,
-        categoryContents: state.contents.filter(item => item.category == action.category)
-      }
-    case 'START_CONTENTS':
-      return {
-        ...state,
-        categoryContents: state.contents
+        selectCategory: action.category
       }
     default:
       return state
@@ -162,12 +157,13 @@ export default () => {
   const nextID = useRef(5)
 
   const [data, dispatch] = useReducer(reducer, initialState)
-  const { contents, isLoading, allSelect, categoryContents } = data
+  const { contents, isLoading, allSelect, selectCategory } = data
   const { title, note } = data.inputs
-
+  
   const [categorys, setCategorys] = useState(['공부', '일정'])
   const [categoryChange, setCategoryChange] = useState('카테고리 미지정')
   const [ onLong, setOnLong ] = useState(false)
+  const [ onCate, setOnCate ] = useState(false)
 
   // useEffect(() => {
   //   dispatch({type: 'START_LOADING'})
@@ -177,7 +173,7 @@ export default () => {
   // }, [])
  
   return (
-    <DataContext.Provider value={{categoryContents, allSelect, contents, dispatch, title, note, nextID, isLoading, categorys, setCategorys, categoryChange, setCategoryChange, onLong, setOnLong}}>
+    <DataContext.Provider value={{selectCategory, onCate, setOnCate, allSelect, contents, dispatch, title, note, nextID, isLoading, categorys, setCategorys, categoryChange, setCategoryChange, onLong, setOnLong}}>
       <NavigationContainer>
         <DrawerNavigator />
       </NavigationContainer>

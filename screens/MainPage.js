@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useRef } from 'react';
-import { Animated } from 'react-native';
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { Animated, View, Text } from 'react-native';
 import styled from 'styled-components';
 
 import { DataContext } from '../App';
@@ -9,13 +9,23 @@ import AnimatedHeader from '../components/header/AnimatedHeader';
 
 export default ({navigation}) => {
   const post = useContext(DataContext);
-  const { contents, setCategoryChange, onLong, setOnLong, dispatch, allSelect, categoryContents } = post
+  const { contents, setCategoryChange, onLong, setOnLong, dispatch, allSelect, onCate, setOnCate, selectCategory } = post
+  const [ categoryContents, setCategoryContents ] = useState([])
 
   const offset = useRef(new Animated.Value(0)).current;
   const slideUpValue = useRef(new Animated.Value(0)).current;
   const radioValue = useRef(new Animated.Value(0)).current;
-  const contentsLength = categoryContents.length
+  const contentsLength = onCate ? categoryContents.length : contents.length
    
+  const categoryFilter = (cate) => {
+    const arr = contents.filter((item) => {
+      return item.category === cate
+    })
+    setCategoryContents(arr);
+  }
+
+
+
   const onALLSelect = () => {
     if (allSelect === false) {
       dispatch({ type: 'ALL_SELECT_TRUE' });
@@ -68,9 +78,10 @@ export default ({navigation}) => {
   };
 
   useEffect(() => {
-    dispatch({ type: 'START_CONTENTS' });
-  }, [])
+    categoryFilter(selectCategory)
+  }, [selectCategory, contents])
 
+  console.log(categoryContents)
   
   return (
     <>
@@ -84,7 +95,13 @@ export default ({navigation}) => {
       <Container contentContainerStyle={{paddingTop: 200, paddingBottom: 30}} scrollEventThrottle={16} onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: offset } }}],
             { useNativeDriver: false })}>
         {
+          onCate ? 
           categoryContents.map((item, i) => {
+            return (<Card item={item} key={i} navigation={navigation} radioValue={radioValue} slideUpAndRadio={slideUpAndRadio}/>)
+          })
+            // <View><Text>히히</Text></View>
+        : 
+          contents.map((item, i) => {
             return (<Card item={item} key={i} navigation={navigation} radioValue={radioValue} slideUpAndRadio={slideUpAndRadio}/>)
           })
         }
