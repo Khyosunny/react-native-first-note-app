@@ -5,7 +5,7 @@ import { DataContext } from '../../App';
 
 export default ({item, navigation, radioValue, slideUpAndRadio}) => {
   const post = useContext(DataContext);
-  const { dispatch, onLong, setOnLong, setCategoryChange, categorys } = post
+  const { dispatch, onLong, setOnLong, setCategoryChange } = post
 
   const paddingAdd = radioValue.interpolate({
     inputRange: [0, 1],
@@ -25,7 +25,7 @@ export default ({item, navigation, radioValue, slideUpAndRadio}) => {
   const onLongPress = (id) => {
     setOnLong(true);
     slideUpAndRadio();
-    dispatch({ type: 'ACTIVE_LONG', id: id, category: categorys });
+    dispatch({ type: 'ACTIVE_LONG', id: id });
   };
 
   const onPress = (id) => {

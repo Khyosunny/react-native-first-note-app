@@ -1,6 +1,36 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
+export default ({onModalCreateCateInvisible, categories, setCategories}) => {
+  const [cateInput, setCateInput] = useState('')
+
+  const onAddCategory = () => {
+    //app 에서 관리하는 category 배열에 input문자열 추가.  
+    setCategories([...categories, cateInput])
+    onModalCreateCateInvisible()
+  }
+
+  return (
+    <CenteredView>
+        <ModalView>
+          <ModalTitle>카테고리 추가하기</ModalTitle>
+          <CreateCategoryInput onChangeText={(category) => {setCateInput(category)}} value={cateInput} autoFocus={true} placeholder="카테고리 명을 입력하세요."/>
+
+          <SelectButtonBox>
+            <Select onPress={onModalCreateCateInvisible}>
+              <SelectText style={{ color: 'red' }}>취소</SelectText>
+            </Select>
+            <Select onPress={onAddCategory}>
+              <SelectText style={{ color: 'green' }}>완료</SelectText>
+            </Select>
+          </SelectButtonBox>
+
+        </ModalView>
+    </CenteredView>
+  )
+}
+
+
 const SelectText =styled.Text`
   font-size: 20px;
   text-align: center;
@@ -46,32 +76,3 @@ const CenteredView = styled.View`
   align-items: center;
 
 `;
-
-export default ({onModalCreateCateInvisible, categorys, setCategorys}) => {
-  const [cateInput, setCateInput] = useState('')
-
-  const onAddCategory = () => {
-    //app 에서 관리하는 category 배열에 input문자열 추가.  
-    setCategorys([...categorys, cateInput])
-    onModalCreateCateInvisible()
-  }
-
-  return (
-    <CenteredView>
-        <ModalView>
-          <ModalTitle>카테고리 추가하기</ModalTitle>
-          <CreateCategoryInput onChangeText={(category) => {setCateInput(category)}} value={cateInput} autoFocus={true} placeholder="카테고리 명을 입력하세요."/>
-
-          <SelectButtonBox>
-            <Select onPress={onModalCreateCateInvisible}>
-              <SelectText style={{ color: 'red' }}>취소</SelectText>
-            </Select>
-            <Select onPress={onAddCategory}>
-              <SelectText style={{ color: 'green' }}>완료</SelectText>
-            </Select>
-          </SelectButtonBox>
-
-        </ModalView>
-    </CenteredView>
-  )
-}

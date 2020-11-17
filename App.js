@@ -160,7 +160,7 @@ export default () => {
   const { contents, isLoading, allSelect, selectCategory } = data
   const { title, note } = data.inputs
   
-  const [categorys, setCategorys] = useState(['공부', '일정'])
+  const [categories, setCategories] = useState(['공부', '일정'])
   const [categoryChange, setCategoryChange] = useState('카테고리 미지정')
   const [ onLong, setOnLong ] = useState(false)
   const [ onCate, setOnCate ] = useState(false)
@@ -173,7 +173,7 @@ export default () => {
   // }, [])
  
   return (
-    <DataContext.Provider value={{selectCategory, onCate, setOnCate, allSelect, contents, dispatch, title, note, nextID, isLoading, categorys, setCategorys, categoryChange, setCategoryChange, onLong, setOnLong}}>
+    <DataContext.Provider value={{selectCategory, onCate, setOnCate, allSelect, contents, dispatch, title, note, nextID, isLoading, categories, setCategories, categoryChange, setCategoryChange, onLong, setOnLong}}>
       <NavigationContainer>
         <DrawerNavigator />
       </NavigationContainer>

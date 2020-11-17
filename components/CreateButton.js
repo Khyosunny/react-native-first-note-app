@@ -1,6 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
 
+export default ({navigation, setCategoryChange}) => {
+
+  const onCreatePage = () => {
+    navigation.navigate('CreatePage')
+    setCategoryChange('카테고리 미지정')
+  }
+
+  return (
+    <CreateButtonContainer onPress={onCreatePage}>
+      <Plus>＋</Plus>
+    </CreateButtonContainer>
+  )
+}
+
 const CreateButtonContainer = styled.TouchableOpacity`
   width: 80px;
   height: 80px;
@@ -18,18 +32,3 @@ const Plus = styled.Text`
   line-height: 80px;
   color: #fff;
 `;
-
-
-export default ({navigation, setCategoryChange}) => {
-
-  const onCreatePage = () => {
-    navigation.navigate('CreatePage')
-    setCategoryChange('카테고리 미지정')
-  }
-
-  return (
-    <CreateButtonContainer onPress={onCreatePage}>
-      <Plus>＋</Plus>
-    </CreateButtonContainer>
-  )
-}

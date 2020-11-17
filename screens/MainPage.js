@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { Animated, View, Text } from 'react-native';
+import { Animated } from 'react-native';
 import styled from 'styled-components';
 
 import { DataContext } from '../App';
@@ -9,22 +9,24 @@ import AnimatedHeader from '../components/header/AnimatedHeader';
 
 export default ({navigation}) => {
   const post = useContext(DataContext);
-  const { contents, setCategoryChange, onLong, setOnLong, dispatch, allSelect, onCate, setOnCate, selectCategory } = post
-  const [ categoryContents, setCategoryContents ] = useState([])
+  const { contents, setCategoryChange, onLong, setOnLong, dispatch, allSelect, selectCategory } = post
+  const [ categoryContents, setCategoryContents ] = useState(null)
 
   const offset = useRef(new Animated.Value(0)).current;
   const slideUpValue = useRef(new Animated.Value(0)).current;
   const radioValue = useRef(new Animated.Value(0)).current;
-  const contentsLength = onCate ? categoryContents.length : contents.length
+  const contentsLength = categoryContents === null ? 0 : categoryContents.length
    
   const categoryFilter = (cate) => {
     const arr = contents.filter((item) => {
-      return item.category === cate
-    })
-    setCategoryContents(arr);
-  }
-
-
+      return cate === '' || item.category === cate
+    });
+    if (arr.length > 0) {
+      setCategoryContents(arr);
+    } else {
+      setCategoryContents(null);
+    }
+  };
 
   const onALLSelect = () => {
     if (allSelect === false) {
@@ -38,12 +40,12 @@ export default ({navigation}) => {
     Animated.parallel([
       Animated.timing(radioValue, {
         toValue: 0,
-        duration: 300,
+        duration: 500,
         useNativeDriver: false
       }),
       Animated.timing(slideUpValue, {
         toValue: 0,
-        duration: 300,
+        duration: 500,
         useNativeDriver: false
       })
     ]).start();
@@ -53,36 +55,35 @@ export default ({navigation}) => {
     Animated.parallel([
       Animated.timing(radioValue, {
         toValue: 1,
-        duration: 300,
+        duration: 500,
         useNativeDriver: false
       }),
       Animated.timing(slideUpValue, {
         toValue: 1,
-        duration: 300,
+        duration: 500,
         useNativeDriver: false
       })
     ]).start();
   };
 
-
   const selectCancle = () => {
-    dispatch({ type: 'SELECT_CANCLE' });
     slideDownAndRadio();
+    dispatch({ type: 'SELECT_CANCLE' });
     setOnLong(false);
   };
 
-  const selectDelete = () => {
-    dispatch({ type: 'SELECT_DELETE' });
+  const selectDelete = async () => {
+    await dispatch({ type: 'SELECT_DELETE' });
+    await setOnLong(false);
     slideDownAndRadio();
-    setOnLong(false);
   };
 
   useEffect(() => {
-    categoryFilter(selectCategory)
+    categoryFilter(selectCategory);
+    console.log(contents.length)
+
   }, [selectCategory, contents])
 
-  console.log(categoryContents)
-  
   return (
     <>
       {
@@ -95,15 +96,11 @@ export default ({navigation}) => {
       <Container contentContainerStyle={{paddingTop: 200, paddingBottom: 30}} scrollEventThrottle={16} onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: offset } }}],
             { useNativeDriver: false })}>
         {
-          onCate ? 
+          categoryContents ?
           categoryContents.map((item, i) => {
             return (<Card item={item} key={i} navigation={navigation} radioValue={radioValue} slideUpAndRadio={slideUpAndRadio}/>)
           })
-            // <View><Text>히히</Text></View>
-        : 
-          contents.map((item, i) => {
-            return (<Card item={item} key={i} navigation={navigation} radioValue={radioValue} slideUpAndRadio={slideUpAndRadio}/>)
-          })
+          : <NoData>등록된 노트가 없습니다.</NoData>
         }
       </Container>
         <Animated.View
@@ -112,7 +109,8 @@ export default ({navigation}) => {
               {
                 translateY: slideUpValue.interpolate({
                   inputRange: [0, 1],
-                  outputRange: [60, 0]
+                  outputRange: [60, 0],
+                  extrapolate: 'clamp'
                 })
               }
             ],
@@ -163,6 +161,14 @@ const Select = styled.TouchableOpacity`
 //   z-index: 15;
 //   flex-direction: row;
 // `;
+
+const NoData = styled.Text`
+  font-size: 20px;
+  text-align: center;
+  padding-top: 60px;
+  color: #333;
+`;
+
 
 const Container = styled.ScrollView`
   width: 100%;

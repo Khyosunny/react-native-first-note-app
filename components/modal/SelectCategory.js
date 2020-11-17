@@ -1,9 +1,46 @@
 import React, { useContext, useState }from 'react';
 import { Modal } from 'react-native';
 import styled from 'styled-components';
-import CreateCategory from './CreateCategory'
-import { DataContext } from '../../App';
 
+import { DataContext } from '../../App';
+import CreateCategory from './CreateCategory'
+
+export default ({ onModalInvisible }) => {
+  const post = useContext(DataContext);
+  const { setCategoryChange, setCategories, categories } = post
+
+  const [modalCreateCateVisible, setModalCreateCateVisible] = useState(false);
+  
+  const onModalCreateCateInvisible  = () => {
+    setModalCreateCateVisible(!modalCreateCateVisible);
+  }
+  const onCategoryChange = (item) => {
+    setCategoryChange(item)
+    onModalInvisible()
+  }
+  return (
+    <CenteredView>
+      <ModalView>
+        <ModalTitle>카테고리 선택하기</ModalTitle>
+        <Modal visible={modalCreateCateVisible} transparent={true} onRequestClose={onModalCreateCateInvisible}>
+          <CreateCategory categories={categories} setCategories={setCategories} onModalCreateCateInvisible={onModalCreateCateInvisible}/>
+        </Modal>
+        {
+          categories && categories.map((item, i)=>{
+            return (
+            <Select onPress={()=>{onCategoryChange(item)}} key={i}>
+              <ModalText>{item}</ModalText>
+            </Select>
+            )
+          })
+        }
+        <Select onPress={() => {setModalCreateCateVisible(true)}} >
+          <ModalText>＋ 카테고리 추가</ModalText>
+        </Select>
+      </ModalView>
+    </CenteredView>
+  )
+}
 
 const ModalText = styled.Text`
   font-size: 18px;
@@ -36,41 +73,3 @@ const CenteredView = styled.View`
   align-items: center;
 
 `;
-
-export default ({ onModalInvisible }) => {
-  const post = useContext(DataContext);
-  const { setCategoryChange, setCategorys, categorys } = post
-
-  const [modalCreateCateVisible, setModalCreateCateVisible] = useState(false);
-
-  
-  const onModalCreateCateInvisible  = () => {
-    setModalCreateCateVisible(!modalCreateCateVisible);
-  }
-  const onCategoryChange = (item) => {
-    setCategoryChange(item)
-    onModalInvisible()
-  }
-  return (
-    <CenteredView>
-      <ModalView>
-        <ModalTitle>카테고리 선택하기</ModalTitle>
-        <Modal visible={modalCreateCateVisible} transparent={true} onRequestClose={onModalCreateCateInvisible}>
-          <CreateCategory categorys={categorys} setCategorys={setCategorys} onModalCreateCateInvisible={onModalCreateCateInvisible}/>
-        </Modal>
-        {
-          categorys && categorys.map((item, i)=>{
-            return (
-            <Select onPress={()=>{onCategoryChange(item)}} key={i}>
-              <ModalText>{item}</ModalText>
-            </Select>
-            )
-          })
-        }
-        <Select onPress={() => {setModalCreateCateVisible(true)}} >
-          <ModalText>＋ 카테고리 추가</ModalText>
-        </Select>
-      </ModalView>
-    </CenteredView>
-  )
-}

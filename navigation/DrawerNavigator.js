@@ -14,23 +14,18 @@ import SearchPage from '../screens/SearchPage';
 
 function CustomDrawerContent(props) {
   const post = useContext(DataContext);
-  const { categorys, dispatch, setOnCate } = post
-
-  const onPress2 = () => {
-    setOnCate(false);
-  }
+  const { categories, dispatch } = post
 
   const onPress = (item) => {
-    setOnCate(true);
     dispatch({ type: 'CATEGORY_FILTER', category: item });
-  }
+  };
 
   return (
     <DrawerContentScrollView {...props}>
       {/* <DrawerItemList {...props} /> */}
-      <DrawerItem label="전체 노트" onPress={() => {onPress2()}} />
+      <DrawerItem label="전체 노트" onPress={() => { onPress('') }} />
       {
-        categorys && categorys.map((item) => {
+        categories && categories.map((item) => {
           return <DrawerItem label={item} key={item} onPress={() => { onPress(item) }}/>
         })
       }
