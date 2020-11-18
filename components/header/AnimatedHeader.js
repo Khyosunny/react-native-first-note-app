@@ -9,7 +9,7 @@ const HEADER_MAX_HEIGHT = 200;
 const HEADER_MIN_HEIGHT = 60;
 const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 
-export default ({ animatedValue, navigation, contentsLength, onLong, onALLSelect, allSelect }) => {
+export default ({ animatedValue, navigation, contentsLength, onLong, onALLSelect, allSelect, selectCategory }) => {
  
   const headerHeight = animatedValue.interpolate({
     inputRange: [0, HEADER_SCROLL_DISTANCE],
@@ -19,7 +19,7 @@ export default ({ animatedValue, navigation, contentsLength, onLong, onALLSelect
 
   const titleText = animatedValue.interpolate({
     inputRange: [0, HEADER_SCROLL_DISTANCE / 2, HEADER_SCROLL_DISTANCE ],
-    outputRange: [30, 26, 0],
+    outputRange: [34, 26, 0],
     extrapolate: 'clamp'
   });
 
@@ -31,7 +31,7 @@ export default ({ animatedValue, navigation, contentsLength, onLong, onALLSelect
 
   const miniTitleSize = animatedValue.interpolate({
     inputRange: [0, HEADER_SCROLL_DISTANCE / 2, HEADER_SCROLL_DISTANCE ],
-    outputRange: [20, 18, 0],
+    outputRange: [18, 16, 0],
     extrapolate: 'clamp'
   });
 
@@ -49,7 +49,7 @@ export default ({ animatedValue, navigation, contentsLength, onLong, onALLSelect
   return (
     <Animated.View style={[styles.container, {height: headerHeight}]}>
       <Animated.Text style={[styles.title, {fontSize: titleText, opacity : textOpacity}]}>나의 노트</Animated.Text>
-      <Animated.Text style={[styles.miniTitle, { fontSize: miniTitleSize, opacity: textOpacity }]}>노트 {contentsLength}개</Animated.Text>
+      <Animated.Text style={[styles.miniTitle, { fontSize: miniTitleSize, opacity: textOpacity }]}>{selectCategory} 노트 {contentsLength}개</Animated.Text>
       {
         onLong ?
           <TouchableOpacity style={styles.radioBox} onPress={onALLSelect}>

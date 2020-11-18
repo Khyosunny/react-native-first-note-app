@@ -11,13 +11,15 @@ export default ({ onModalInvisible }) => {
 
   const [modalCreateCateVisible, setModalCreateCateVisible] = useState(false);
   
-  const onModalCreateCateInvisible  = () => {
+  const onModalCreateCateInvisible = () => {
     setModalCreateCateVisible(!modalCreateCateVisible);
-  }
+  };
+
   const onCategoryChange = (item) => {
-    setCategoryChange(item)
-    onModalInvisible()
-  }
+    setCategoryChange(item);
+    onModalInvisible();
+  };
+
   return (
     <CenteredView>
       <ModalView>
@@ -28,7 +30,7 @@ export default ({ onModalInvisible }) => {
         {
           categories && categories.map((item, i)=>{
             return (
-            <Select onPress={()=>{onCategoryChange(item)}} key={i}>
+            <Select onPress={() => {onCategoryChange(item)}} key={i}>
               <ModalText>{item}</ModalText>
             </Select>
             )

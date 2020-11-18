@@ -18,7 +18,7 @@ const initialState = {
       note: "내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용",
       active: false,
       category: "공부",
-      date: "2020년 11월 06일"
+      date: "2020년 11월 18일"
     },
     {
       id: 3,
@@ -34,7 +34,7 @@ const initialState = {
       note: "내용",
       active: false,
       category: "공부",
-      date: "2020년 10월 29일"
+      date: "2020년 11월 02일"
     },
     {
       id: 1,
@@ -42,7 +42,7 @@ const initialState = {
       note: "내용",
       active: false,
       category: "일정",
-      date: "2020년 10월 29일"
+      date: "2020년 11월 01일"
     }
   ],
   selectCategory: '',
@@ -162,18 +162,29 @@ export default () => {
   
   const [categories, setCategories] = useState(['공부', '일정'])
   const [categoryChange, setCategoryChange] = useState('카테고리 미지정')
-  const [ onLong, setOnLong ] = useState(false)
-  const [ onCate, setOnCate ] = useState(false)
+  const [onLong, setOnLong] = useState(false)
 
-  // useEffect(() => {
-  //   dispatch({type: 'START_LOADING'})
-  //   setTimeout(() => {
-  //     dispatch({type: 'FINISH_LOADING'})
-  //   },300)
-  // }, [])
+  const [categoryContents, setCategoryContents] = useState(null)
+  const contentsLength = categoryContents === null ? 0 : categoryContents.length
+  
+  const categoryFilter = (cate) => {
+    const arr = contents.filter((item) => {
+      return cate === '' || item.category === cate
+    });
+    if (arr.length > 0) {
+      setCategoryContents(arr);
+    } else {
+      setCategoryContents(null);
+    }
+  };
+
+  useEffect(() => {
+    categoryFilter(selectCategory);
+  }, [selectCategory, contents])
  
   return (
-    <DataContext.Provider value={{selectCategory, onCate, setOnCate, allSelect, contents, dispatch, title, note, nextID, isLoading, categories, setCategories, categoryChange, setCategoryChange, onLong, setOnLong}}>
+    <DataContext.Provider
+      value={{ contentsLength, categoryContents, selectCategory, allSelect, contents, dispatch, title, note, nextID, isLoading, categories, setCategories, categoryChange, setCategoryChange, onLong, setOnLong }}>
       <NavigationContainer>
         <DrawerNavigator />
       </NavigationContainer>

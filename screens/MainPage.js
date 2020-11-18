@@ -9,24 +9,11 @@ import AnimatedHeader from '../components/header/AnimatedHeader';
 
 export default ({navigation}) => {
   const post = useContext(DataContext);
-  const { contents, setCategoryChange, onLong, setOnLong, dispatch, allSelect, selectCategory } = post
-  const [ categoryContents, setCategoryContents ] = useState(null)
+  const { contents, setCategoryChange, onLong, setOnLong, dispatch, allSelect, selectCategory, categoryContents, contentsLength } = post
 
   const offset = useRef(new Animated.Value(0)).current;
   const slideUpValue = useRef(new Animated.Value(0)).current;
   const radioValue = useRef(new Animated.Value(0)).current;
-  const contentsLength = categoryContents === null ? 0 : categoryContents.length
-   
-  const categoryFilter = (cate) => {
-    const arr = contents.filter((item) => {
-      return cate === '' || item.category === cate
-    });
-    if (arr.length > 0) {
-      setCategoryContents(arr);
-    } else {
-      setCategoryContents(null);
-    }
-  };
 
   const onALLSelect = () => {
     if (allSelect === false) {
@@ -78,11 +65,7 @@ export default ({navigation}) => {
     slideDownAndRadio();
   };
 
-  useEffect(() => {
-    categoryFilter(selectCategory);
-    console.log(contents.length)
 
-  }, [selectCategory, contents])
 
   return (
     <>
@@ -92,9 +75,19 @@ export default ({navigation}) => {
         setCategoryChange={setCategoryChange}
         />
       }
-      <AnimatedHeader animatedValue={offset} navigation={navigation} contentsLength={contentsLength} onLong={onLong} onALLSelect={onALLSelect} allSelect={allSelect}/>
-      <Container contentContainerStyle={{paddingTop: 200, paddingBottom: 30}} scrollEventThrottle={16} onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: offset } }}],
-            { useNativeDriver: false })}>
+      <AnimatedHeader
+        animatedValue={offset}
+        navigation={navigation}
+        contentsLength={contentsLength}
+        onLong={onLong}
+        onALLSelect={onALLSelect}
+        allSelect={allSelect}
+        selectCategory={selectCategory}
+      />
+      <Container
+        contentContainerStyle={{ paddingTop: 200, paddingBottom: contentsLength >= 1 ? 170 : 300 }}
+        scrollEventThrottle={16}
+        onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: offset } } }],{ useNativeDriver: false })}>
         {
           categoryContents ?
           categoryContents.map((item, i) => {
