@@ -1,10 +1,12 @@
-import React, { useContext, useState } from 'react';
-import { View, Text, Image, TouchableHighlight, TouchableOpacity } from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
+import { View, Text, TouchableHighlight } from 'react-native';
 
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer';
+
 import { DataContext } from '../App';
+import CustomDrawerItem from '../components/CustomDrawerItem';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Settings from 'react-native-vector-icons/Ionicons';
 
@@ -18,7 +20,8 @@ import SearchPage from '../screens/SearchPage';
 
 function CustomDrawerContent(props) {
   const post = useContext(DataContext);
-  const { categories, dispatch } = post
+  const { categories, dispatch, contents } = post
+  
 
   const onPress = (item) => {
     dispatch({ type: 'CATEGORY_FILTER', category: item });
@@ -29,15 +32,15 @@ function CustomDrawerContent(props) {
     <DrawerContentScrollView {...props}>
       {/* <DrawerItemList {...props} /> */}
       <TouchableHighlight
-          style={{ width: 60, height: 60, borderRadius: 60, alignSelf: "flex-end", marginRight: 10 }}
-          activeOpacity={1}
-          underlayColor="rgba(0,0,0,0.3)"
-          onPress={() => { props.navigation.closeDrawer(); }}>
-          <Settings
-            name="settings-sharp"
-            color="#666"
-            size={35}
-            style={{ textAlign: 'center', lineHeight: 60 }} />
+        style={{ width: 60, height: 60, borderRadius: 60, alignSelf: "flex-end", marginRight: 10 }}
+        activeOpacity={1}
+        underlayColor="rgba(0,0,0,0.3)"
+        onPress={() => { props.navigation.closeDrawer(); }}>
+        <Settings
+          name="settings-sharp"
+          color="#666"
+          size={35}
+          style={{ textAlign: 'center', lineHeight: 60 }} />
       </TouchableHighlight> 
       
       <DrawerItem
@@ -46,15 +49,10 @@ function CustomDrawerContent(props) {
         label="전체 노트"
         labelStyle={{ fontSize: 20, color: "#222" }}
         onPress={() => { onPress('') }} />
+      <Text style={{ marginLeft: 50 }}>{contents.length}</Text>
       {
         categories && categories.map((item) => {
-          return <DrawerItem
-            style={{ marginLeft: 20 }}
-            icon={({ color, size }) => <Icon name="bookmark" color="#666" size={30}/>}
-            label={item}
-            labelStyle={{ fontSize: 20, color: "#222" }}
-            key={item}
-            onPress={() => { onPress(item) }} />
+          return <CustomDrawerItem item={item} key={item} event={onPress} contents={contents}/>
         })
       }
         

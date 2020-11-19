@@ -27,12 +27,12 @@ export default ({navigation}) => {
     Animated.parallel([
       Animated.timing(radioValue, {
         toValue: 0,
-        duration: 500,
+        duration: 400,
         useNativeDriver: false
       }),
       Animated.timing(slideUpValue, {
         toValue: 0,
-        duration: 500,
+        duration: 400,
         useNativeDriver: false
       })
     ]).start();
