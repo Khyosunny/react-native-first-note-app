@@ -15,6 +15,7 @@ import MainPage from '../screens/MainPage';
 import CreatePage from '../screens/CreatePage';
 import UpdatePage from '../screens/UpdatePage';
 import SearchPage from '../screens/SearchPage';
+import SettingPage from '../screens/SettingPage';
 
 
 
@@ -35,7 +36,7 @@ function CustomDrawerContent(props) {
         style={{ width: 60, height: 60, borderRadius: 60, alignSelf: "flex-end", marginRight: 10 }}
         activeOpacity={1}
         underlayColor="rgba(0,0,0,0.3)"
-        onPress={() => { props.navigation.closeDrawer(); }}>
+        onPress={() => { props.navigation.navigate('SettingPage'); }}>
         <Settings
           name="settings-sharp"
           color="#666"
@@ -69,6 +70,7 @@ function StackNavigator() {
       <Stack.Screen name="CreatePage" component={CreatePage} />
       <Stack.Screen name="UpdatePage" component={UpdatePage} />
       <Stack.Screen name="SearchPage" component={SearchPage} />
+      <Stack.Screen name="SettingPage" component={SettingPage} />
     </Stack.Navigator>
   )
 }

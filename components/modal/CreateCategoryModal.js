@@ -1,7 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
 
-export default ({onModalCreateCateInvisible, categories, setCategories}) => {
+import { DataContext } from '../../App';
+
+
+export default ({onModalCreateCateInvisible}) => {
+  const post = useContext(DataContext);
+  const { setCategories, categories } = post
+
   const [cateInput, setCateInput] = useState('')
 
   const onAddCategory = () => {

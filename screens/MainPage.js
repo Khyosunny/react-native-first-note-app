@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { DataContext } from '../App';
 import Card from '../components/card/Card';
-import CreateButton from '../components/CreateButton';
+import CreateButton from '../components/button/CreateButton';
 import AnimatedHeader from '../components/header/AnimatedHeader';
 
 export default ({navigation}) => {

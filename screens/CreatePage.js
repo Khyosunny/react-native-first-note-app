@@ -3,10 +3,10 @@ import { Modal } from 'react-native';
 import styled from 'styled-components';
 
 import { DataContext } from '../App';
-import SaveButton from '../components/SaveButton';
-import BackButton from '../components/BackButton';
+import SaveButton from '../components/button/SaveButton';
+import BackButton from '../components/button/BackButton';
 import CategoryButton from '../components/CategoryButton';
-import SelectCategory from '../components/modal/SelectCategory';
+import SelectCategory from '../components/modal/SelectCategoryModal';
 
 export default ({ navigation }) => {
   const post = useContext(DataContext);
