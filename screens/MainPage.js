@@ -6,6 +6,8 @@ import { DataContext } from '../App';
 import Card from '../components/card/Card';
 import CreateButton from '../components/button/CreateButton';
 import AnimatedHeader from '../components/header/AnimatedHeader';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Back from 'react-native-vector-icons/AntDesign';
 
 export default ({navigation}) => {
   const post = useContext(DataContext);
@@ -27,12 +29,12 @@ export default ({navigation}) => {
     Animated.parallel([
       Animated.timing(radioValue, {
         toValue: 0,
-        duration: 400,
+        duration: 300,
         useNativeDriver: false
       }),
       Animated.timing(slideUpValue, {
         toValue: 0,
-        duration: 400,
+        duration: 300,
         useNativeDriver: false
       })
     ]).start();
@@ -42,21 +44,21 @@ export default ({navigation}) => {
     Animated.parallel([
       Animated.timing(radioValue, {
         toValue: 1,
-        duration: 500,
+        duration: 300,
         useNativeDriver: false
       }),
       Animated.timing(slideUpValue, {
         toValue: 1,
-        duration: 500,
+        duration: 300,
         useNativeDriver: false
       })
     ]).start();
   };
 
-  const selectCancle = () => {
+  const selectCancle = async () => {
+    await dispatch({ type: 'SELECT_CANCLE' });
+    await setOnLong(false);
     slideDownAndRadio();
-    dispatch({ type: 'SELECT_CANCLE' });
-    setOnLong(false);
   };
 
   const selectDelete = async () => {
@@ -65,6 +67,9 @@ export default ({navigation}) => {
     slideDownAndRadio();
   };
 
+  useEffect(() => {
+    dispatch({ type: 'ALL_SELECT_FALSE' })
+  }, [contents])
 
 
   return (
@@ -102,14 +107,16 @@ export default ({navigation}) => {
               {
                 translateY: slideUpValue.interpolate({
                   inputRange: [0, 1],
-                  outputRange: [60, 0],
+                  outputRange: [70, 0],
                   extrapolate: 'clamp'
                 })
               }
             ],
             width: '100%',
-            height: 60,
+            height: 70,
             backgroundColor: '#fff',
+            borderTopWidth: 1,
+            borderColor: '#f1f1f1',
             position: 'absolute',
             bottom: 0,
             right: 0,
@@ -117,9 +124,11 @@ export default ({navigation}) => {
             flexDirection: 'row'
           }}>
           <Select onPress={selectCancle}>
+            <Back name="back" color="#222" size={30}/>
             <CancleText>취소</CancleText>
           </Select>
           <Select onPress={selectDelete}>
+            <Icon name="delete" color="#222" size={30}/>
             <DeleteText>삭제</DeleteText>
           </Select>
         </Animated.View>
@@ -128,19 +137,21 @@ export default ({navigation}) => {
 }
 
 const DeleteText = styled.Text`
-  font-size: 18px;
+  font-size: 16px;
   text-align: center;
-  line-height: 60px;
+  color: #000;
 `;
 
 const CancleText = styled.Text`
-  font-size: 18px;
+  font-size: 16px;
   text-align: center;
-  line-height: 60px;
+  color: #000;
+
 `;
 
 const Select = styled.TouchableOpacity`
-  background-color: #eee;
+  align-items: center;
+  justify-content: center;
   width: 50%
 `;
 
