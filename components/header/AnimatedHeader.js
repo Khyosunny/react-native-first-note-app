@@ -3,7 +3,6 @@ import { Animated, View, Text, Image, StyleSheet, TouchableOpacity } from 'react
 
 import Hamburger from '../../assets/Hamburger.png';
 import Search from '../../assets/Search.png';
-import Dot from '../../assets/Dot.png';
 
 const HEADER_MAX_HEIGHT = 200;
 const HEADER_MIN_HEIGHT = 60;
@@ -69,9 +68,6 @@ export default ({ animatedValue, navigation, contentsLength, onLong, onALLSelect
           <View style={styles.iconRightBox}>
             <TouchableOpacity style={styles.iconArea} onPress={() => {navigation.navigate('SearchPage')}}>
               <Image style={styles.searchIcon} source={Search} />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.iconArea}>
-              <Image style={styles.dotIcon} source={Dot} />
             </TouchableOpacity>
           </View>
         </View>

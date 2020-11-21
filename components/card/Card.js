@@ -22,18 +22,18 @@ export default ({item, navigation, radioValue, slideUpAndRadio}) => {
     outputRange: [0, 1]
   });
   
-  const onLongPress = (id) => {
+  const onLongPress =  (id) => {
+    dispatch({ type: 'ACTIVE_LONG', id: id });
     setOnLong(true);
     slideUpAndRadio();
-    dispatch({ type: 'ACTIVE_LONG', id: id });
   };
 
   const onPress = (id) => {
-    if (!onLong) {
+    if (onLong) {
+      dispatch({ type: 'ACTIVE_TOGGLE', id: id });
+    } else {
       setCategoryChange(item.category);
       navigation.navigate('UpdatePage', item);
-    } else {
-      dispatch({ type: 'ACTIVE_TOGGLE', id: id });
     }
   };
   

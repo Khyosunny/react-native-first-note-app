@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import styled from 'styled-components';
 
 import { DataContext } from '../App';
-import BackButton from '../components/BackButton'
+import BackButton from '../components/button/BackButton'
 import SearchCard from '../components/card/SearchCard';
 
 

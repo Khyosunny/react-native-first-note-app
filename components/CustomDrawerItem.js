@@ -1,6 +1,6 @@
 import React, { useEffect, useState} from 'react';
-import { View, Text, TouchableHighlight } from 'react-native';
-import { DrawerItem } from '@react-navigation/drawer';
+import styled from 'styled-components';
+
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -20,14 +20,41 @@ export default ({item, event, contents}) => {
   },[contents])
 
   return (
-    <View>
-      <DrawerItem
-        style={{ marginLeft: 20 }}
-        icon={({ color, size }) => <Icon name="bookmark" color="#666" size={30}/>}
-        label={item}
-        labelStyle={{ fontSize: 20, color: "#222" }}
-        onPress={() => { event(item) }} />
-      <Text style={{ marginLeft: 50 }}>{count}</Text>
-    </View>
+    <DrawerMenu 
+      activeOpacity={1}
+      underlayColor="rgba(0,0,0,0.3)"
+      onPress={() => { event(item) }}
+    >
+      <AlignBox>
+        <Icon style={{flex: 1, marginLeft: 30}} name="bookmark" color="#666" size={30}/>
+        <DrawerTitle>{item}</DrawerTitle>
+        <CategoryLength>{count}</CategoryLength>
+      </AlignBox>
+    </DrawerMenu>
   )
 }
+
+
+const CategoryLength = styled.Text`
+  font-size: 18px;
+  color: #666;
+  justify-content: flex-end;
+  flex: 1;
+`;
+
+const DrawerTitle = styled.Text`
+  flex: 4;
+  font-size: 22px;
+`;
+
+const AlignBox = styled.View`
+  width: 100%;
+  flex-direction: row;
+  align-items: center;
+`;
+
+const DrawerMenu = styled.TouchableHighlight`
+  flex-direction: row;
+  width: 96%;
+  height: 50px;
+`;

@@ -117,7 +117,8 @@ function reducer(state, action){
         contents: state.contents.map((item) => 
           item.id === action.id ? {...item, active: !item.active}
         : item
-        )
+        ),
+        allSelect: false
       }
     case 'SELECT_DELETE':
       return {
@@ -140,7 +141,7 @@ function reducer(state, action){
     case 'ALL_SELECT_TOGGLE':
       return {
         ...state,
-        contents: state.contents.map((item) => ({ ...item, active: !item.active })),
+        contents: state.contents.map((item) => ({ ...item, active: item.active ? !item.active : false })),
         allSelect: !state.allSelect
       }
     case 'CATEGORY_FILTER':
