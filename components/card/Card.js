@@ -22,7 +22,7 @@ export default ({item, navigation, radioValue, slideUpAndRadio}) => {
     outputRange: [0, 1]
   });
   
-  const onLongPress =  (id) => {
+  const onLongPress = (id) => {
     dispatch({ type: 'ACTIVE_LONG', id: id });
     setOnLong(true);
     slideUpAndRadio();
