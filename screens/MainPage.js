@@ -11,7 +11,7 @@ import Back from 'react-native-vector-icons/AntDesign';
 
 export default ({navigation}) => {
   const post = useContext(DataContext);
-  const { contents, setCategoryChange, onLong, setOnLong, dispatch, allSelect, selectCategory, categoryContents, contentsLength } = post
+  const { setCategoryChange, onLong, setOnLong, dispatch, allSelect, selectCategory, categoryContents, contentsLength } = post
 
   const offset = useRef(new Animated.Value(0)).current;
   const slideUpValue = useRef(new Animated.Value(0)).current;
@@ -67,9 +67,7 @@ export default ({navigation}) => {
     slideDownAndRadio();
   };
 
-  useEffect(() => {
-    dispatch({ type: 'ALL_SELECT_FALSE' })
-  }, [contents])
+ 
 
 
   return (

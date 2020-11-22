@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { Modal } from 'react-native';
+import moment from 'moment';
 import styled from 'styled-components';
 
 import { DataContext } from '../App';
@@ -13,9 +14,8 @@ export default ({ navigation }) => {
   const { title, note, dispatch, nextID, categoryChange } = post
   const [modalVisible, setModalVisible] = useState(false);
 
-  const now = new Date();
-  const hours = now.getHours();
-  const minutes = now.getMinutes();
+  const hours = moment().hours();
+  const minutes = moment().minutes();
 
   const onBack = () => {
     navigation.goBack();
@@ -37,7 +37,7 @@ export default ({ navigation }) => {
         title,
         note,
         active: false,
-        date: `${hours < 12 ? '오전' : '오후'} ${hours < 10 ? `0${hours}` : hours} : ${minutes < 10 ? `0${minutes}` : minutes}`,
+        date: `${hours < 12 ? '오전' : '오후'} ${hours < 10 ? `0${hours}` : hours > 12 ? `0${hours - 12}` : hours } : ${minutes < 10 ? `0${minutes}` : minutes}`,
         category: categoryChange,
       }
     });

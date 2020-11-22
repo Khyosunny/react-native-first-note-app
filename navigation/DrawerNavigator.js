@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { DrawerContentScrollView } from '@react-navigation/drawer';
+import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 
 import { DataContext } from '../App';
 import CustomDrawerItem from '../components/CustomDrawerItem';
@@ -29,7 +29,6 @@ function CustomDrawerContent(props) {
 
   return (
     <DrawerContentScrollView {...props}>
-      {/* <DrawerItemList {...props} /> */}
       <MenuTitle>효선 노트</MenuTitle>
       <View style={{alignItems: 'center', marginTop: 20}}>
         <DrawerMenu 
