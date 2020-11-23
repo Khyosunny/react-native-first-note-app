@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
+import { Keyboard } from 'react-native';
 import styled from 'styled-components';
 
 import { DataContext } from '../App';
@@ -13,6 +14,7 @@ export default ({ navigation }) => {
   const [input, setInput] = useState('');
 
   const onBack = () => {
+    Keyboard.dismiss();
     navigation.goBack();
   };
   

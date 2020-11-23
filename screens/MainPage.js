@@ -29,12 +29,12 @@ export default ({navigation}) => {
     Animated.parallel([
       Animated.timing(radioValue, {
         toValue: 0,
-        duration: 300,
+        duration: 200,
         useNativeDriver: false
       }),
       Animated.timing(slideUpValue, {
         toValue: 0,
-        duration: 300,
+        duration: 200,
         useNativeDriver: false
       })
     ]).start();
@@ -44,12 +44,12 @@ export default ({navigation}) => {
     Animated.parallel([
       Animated.timing(radioValue, {
         toValue: 1,
-        duration: 300,
+        duration: 200,
         useNativeDriver: false
       }),
       Animated.timing(slideUpValue, {
         toValue: 1,
-        duration: 300,
+        duration: 200,
         useNativeDriver: false
       })
     ]).start();

@@ -1,12 +1,12 @@
 import React, { useContext, useState } from 'react';
-import { Modal } from 'react-native';
+import { Modal, Keyboard } from 'react-native';
 import moment from 'moment';
 import styled from 'styled-components';
 
 import { DataContext } from '../App';
 import SaveButton from '../components/button/SaveButton';
 import BackButton from '../components/button/BackButton';
-import CategoryButton from '../components/CategoryButton';
+import CategoryButton from '../components/button/CategoryButton';
 import SelectCategory from '../components/modal/SelectCategoryModal';
 
 export default ({ navigation }) => {
@@ -18,14 +18,17 @@ export default ({ navigation }) => {
   const minutes = moment().minutes();
 
   const onBack = () => {
+    Keyboard.dismiss();
     navigation.goBack();
   };
 
   const onModalInvisible = () => {
+    Keyboard.dismiss();
     setModalVisible(!modalVisible);
   };
 
   const onModalVisible = () => {
+    Keyboard.dismiss();
     setModalVisible(true);
   };
 
@@ -37,11 +40,12 @@ export default ({ navigation }) => {
         title,
         note,
         active: false,
-        date: `${hours < 12 ? '오전' : '오후'} ${hours < 10 ? `0${hours}` : hours > 12 ? `0${hours - 12}` : hours } : ${minutes < 10 ? `0${minutes}` : minutes}`,
+        date: `${hours < 12 ? '오전' : '오후'} ${hours < 10 ? `0${hours}` : hours > 12 ? `${hours - 12}` : hours } : ${minutes < 10 ? `0${minutes}` : minutes}`,
         category: categoryChange,
       }
     });
     nextID.current += 1;
+    Keyboard.dismiss();
     dispatch({ type: 'START_CONTENTS' });
     navigation.goBack();
   };

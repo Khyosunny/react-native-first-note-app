@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import { Keyboard } from 'react-native';
 import styled from 'styled-components';
 
 import { DataContext } from '../../App';
@@ -11,6 +12,7 @@ export default ({onModalCreateCateInvisible}) => {
   const [cateInput, setCateInput] = useState('')
 
   const onAddCategory = () => {
+    Keyboard.dismiss();
     setCategories([...categories, cateInput]);
     onModalCreateCateInvisible();
   };
@@ -70,6 +72,7 @@ const ModalTitle = styled.Text`
 const ModalView = styled.View`
   width: 80%;
   padding: 30px;
+  border-radius: 30px;
   background-color: #fff;
   margin-bottom: 50px;
 `;

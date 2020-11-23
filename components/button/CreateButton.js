@@ -16,9 +16,9 @@ export default ({navigation, setCategoryChange}) => {
 }
 
 const CreateButtonContainer = styled.TouchableOpacity`
-  width: 80px;
-  height: 80px;
-  border-radius: 80px;
+  width: 70px;
+  height: 70px;
+  border-radius: 70px;
   background-color: #FF7974;
   position: absolute;
   bottom: 30px;
@@ -27,8 +27,8 @@ const CreateButtonContainer = styled.TouchableOpacity`
 `;
 
 const Plus = styled.Text`
-  font-size: 40px;
+  font-size: 36px;
   text-align: center;
-  line-height: 80px;
+  line-height: 70px;
   color: #fff;
 `;

@@ -1,11 +1,11 @@
 import React, { useContext, useState } from 'react';
-import { ToastAndroid, Modal } from 'react-native';
+import { ToastAndroid, Modal, Keyboard } from 'react-native';
 import styled from 'styled-components';
 
 import { DataContext } from '../App';
 import SaveButton from '../components/button/SaveButton';
 import BackButton from '../components/button/BackButton';
-import CategoryButton from '../components/CategoryButton';
+import CategoryButton from '../components/button/CategoryButton';
 import SelectCategory from '../components/modal/SelectCategoryModal';
 
 export default ({navigation, route}) => {
@@ -26,10 +26,12 @@ export default ({navigation, route}) => {
   };
 
   const onModalInvisible = () => {
+    Keyboard.dismiss();
     setModalVisible(!modalVisible);
   };
 
   const onModalVisible = () => {
+    Keyboard.dismiss();
     setModalVisible(true);
   };
 
@@ -49,6 +51,7 @@ export default ({navigation, route}) => {
         category: categoryChange
       });
     }
+    Keyboard.dismiss();
     navigation.goBack();
   };
 
