@@ -1,7 +1,5 @@
 # my-note-app
 
-[![React Native](https://img.shields.io/badge/React%20Native-0.63.3-blue.svg?style=rounded-square)](https://facebook.github.io/react-native/)
-
 리액트 네이티브를 처음 독학하면서 만든 노트앱 입니다.
 
 상태관리로 **useReducer**와 **context API**를 사용했습니다.
