@@ -30,7 +30,6 @@ Animated 를 이용하여 scroll에 변화를 주었을 때 상단 Navbar에 애
 
 ![note_app_02](https://user-images.githubusercontent.com/71235165/99971098-1731dc80-2de0-11eb-89d9-cd2e70dc7a41.gif)
 
-(직접 디자인한 갤럭시 테마를 적용시켰기 때문에 키보드가 분홍색입니다)
 
 ### 02. 카테고리 생성 & 선택
 
